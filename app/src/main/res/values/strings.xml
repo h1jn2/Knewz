@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Knewz</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="title_activity_news_card">NewsCard</string>
 </resources>
