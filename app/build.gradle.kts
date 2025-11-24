@@ -42,8 +42,8 @@ android {
 }
 
 dependencies {
-    runtimeOnly(libs.androidx.material.icons.core)
-    runtimeOnly(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.compose.nav)
     implementation(libs.coroutines.core)
     implementation(libs.lifecycle.viewmodel.compose)
