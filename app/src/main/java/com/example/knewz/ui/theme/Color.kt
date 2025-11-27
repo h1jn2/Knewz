@@ -54,4 +54,6 @@ val TextDarkGray = Color(0xFF333333)
 // 보조 텍스트, 설명 텍스트, 아이콘 기본 색상
 val TextMediumGray = Color(0xFF666666)
 // 아주 보조적인 텍스트, 예: 시간 표시
-val TextLightGray = Color(0xFF999999)
+val TextLightGray = Color(0xFF717171)
+val StrokeGray = Color(0xFFD9D9D9)
+val LightGray = Color(0xFFE8E8E8)

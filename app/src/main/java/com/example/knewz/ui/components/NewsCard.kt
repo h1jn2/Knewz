@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.knewz.ui.theme.LightGray
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 
@@ -100,11 +101,11 @@ fun NewsCard() {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row {
-                    Tag()
+                    Tag("# AI", LightGray, 10.dp)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Tag()
+                    Tag("# 인공지능", LightGray, 10.dp)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Tag()
+                    Tag("# 정치", LightGray, 10.dp)
                 }
             }
         }

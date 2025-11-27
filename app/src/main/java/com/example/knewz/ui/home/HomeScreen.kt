@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.example.knewz.ui.components.NewsCard
 import com.example.knewz.ui.components.Tag
 import com.example.knewz.ui.theme.AccentPurple
+import com.example.knewz.ui.theme.StrokeGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -111,7 +112,7 @@ fun HomeScreen() {
                     color = Color.Black
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                Tag()
+                Tag("AI 기반", Color.White, 5.dp, StrokeGray)
             }
             Spacer(modifier = Modifier.height(16.dp))
             Column {
