@@ -22,7 +22,7 @@ import com.example.knewz.ui.theme.LightGray
 import com.example.knewz.ui.theme.TextLightGray
 
 @Composable
-fun Tag(tagName: String, backgroundColor: Color, borderRound: Dp, borderColor: Color = LightGray) {
+fun Tag(tagName: String, backgroundColor: Color, borderRound: Dp, textColor: Color, borderColor: Color = LightGray) {
     Box(
         modifier = Modifier
             .fillMaxHeight()
@@ -38,7 +38,7 @@ fun Tag(tagName: String, backgroundColor: Color, borderRound: Dp, borderColor: C
         Text(
             text = tagName,
             style = MaterialTheme.typography.labelSmall,
-            color = TextLightGray
+            color = textColor
         )
     }
 }

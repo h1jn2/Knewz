@@ -28,6 +28,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.knewz.ui.theme.LightGray
+import com.example.knewz.ui.theme.StrokeGray
+import com.example.knewz.ui.theme.TextLightGray
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 
@@ -38,10 +40,9 @@ fun NewsCard() {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
             .clickable { },
         shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(1.dp, Color.Gray),
+        border = BorderStroke(1.dp, StrokeGray),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(
@@ -101,11 +102,11 @@ fun NewsCard() {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row {
-                    Tag("# AI", LightGray, 10.dp)
+                    Tag("# AI", LightGray, 10.dp, TextLightGray)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Tag("# 인공지능", LightGray, 10.dp)
+                    Tag("# 인공지능", LightGray, 10.dp, TextLightGray)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Tag("# 정치", LightGray, 10.dp)
+                    Tag("# 정치", LightGray, 10.dp, TextLightGray)
                 }
             }
         }

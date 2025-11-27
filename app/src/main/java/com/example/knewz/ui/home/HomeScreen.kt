@@ -49,7 +49,7 @@ import com.example.knewz.ui.theme.StrokeGray
 fun HomeScreen() {
     val scrollState = rememberScrollState()
     Scaffold(
-        contentWindowInsets = WindowInsets(0,0,0,0),
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -89,7 +89,7 @@ fun HomeScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White, RoundedCornerShape(10.dp))
-                    .border(BorderStroke(1.dp, Color.Gray), RoundedCornerShape(10.dp))
+                    .border(BorderStroke(1.dp, StrokeGray), RoundedCornerShape(10.dp))
                     .padding(12.dp)
             ) {
                 Icon(imageVector = Icons.Outlined.Search, contentDescription = "Search")
@@ -104,7 +104,11 @@ fun HomeScreen() {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Outlined.HotelClass, contentDescription = "AI", tint = AccentPurple)
+                Icon(
+                    imageVector = Icons.Outlined.HotelClass,
+                    contentDescription = "AI",
+                    tint = AccentPurple
+                )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = "맞춤 추천 뉴스",
@@ -112,15 +116,13 @@ fun HomeScreen() {
                     color = Color.Black
                 )
                 Spacer(modifier = Modifier.width(4.dp))
-                Tag("AI 기반", Color.White, 5.dp, StrokeGray)
+                Tag("AI 기반", Color.White, 5.dp, Color.Black, StrokeGray)
             }
             Spacer(modifier = Modifier.height(16.dp))
             Column {
                 repeat(3) {
                     NewsCard()
-                    if (it < 2) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
             Row(
@@ -138,9 +140,7 @@ fun HomeScreen() {
             Column {
                 repeat(3) {
                     NewsCard()
-                    if (it < 2) {
-                        Spacer(modifier = Modifier.height(8.dp))
-                    }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
