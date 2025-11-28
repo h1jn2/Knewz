@@ -61,6 +61,7 @@ fun NewsCard() {
                     contentScale = ContentScale.Crop
                 )
             )
+            Spacer(Modifier.width(16.dp))
             Column(
                 modifier = Modifier.weight(1f)
             ) {
