@@ -25,7 +25,11 @@ val PrimaryGreenHalf = Color(0x2B22B282)
 val PrimaryGreenTenth = Color(0x1A22B282)
 // 중간 회색의 아주 낮은 불투명도 (Alpha 26)
 val TextMediumGray10 = Color(0x1A666666)
-
+// 💡 보라색 계열의 연한 그라데이션 색상 정의
+val PurpleLight = Color(0xFFF3E8FF)
+val PurpleMid = Color(0xFF6B5A90)
+val PurpleDark = Color(0xFFD9C8FF)
+val BlueLight = Color(0xFFEAF3FF)
 
 // ====================================================================
 // 3. 기본/배경 색상 (Base & Background)
