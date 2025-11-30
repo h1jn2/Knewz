@@ -25,7 +25,6 @@ import com.example.knewz.ui.theme.TextLightGray
 fun Tag(tagName: String, backgroundColor: Color, borderRound: Dp, textColor: Color, borderColor: Color = LightGray) {
     Box(
         modifier = Modifier
-            .fillMaxHeight()
             .sizeIn(minWidth = 50.dp, minHeight = 24.dp)
             .background(backgroundColor, RoundedCornerShape(borderRound))
             .border(
@@ -37,7 +36,7 @@ fun Tag(tagName: String, backgroundColor: Color, borderRound: Dp, textColor: Col
     ) {
         Text(
             text = tagName,
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.labelLarge,
             color = textColor
         )
     }
