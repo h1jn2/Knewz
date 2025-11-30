@@ -17,7 +17,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
     NavHost(
         navController = navController,
         startDestination = BottomNavItem.Home.route,
-        modifier = modifier // 추가!
+        modifier = modifier
     ) {
         composable(BottomNavItem.Home.route) { HomeScreen() }
         composable(BottomNavItem.Keyword.route) { KeywordScreen() }
