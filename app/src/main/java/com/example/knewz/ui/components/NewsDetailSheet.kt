@@ -55,10 +55,10 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
             onDismissRequest = onDismissRequest,
             sheetState = sheetState,
             modifier = Modifier
-                .background(Color.White)
                 .padding(top = 100.dp)
                 .fillMaxHeight(),
-            dragHandle = null
+            dragHandle = null,
+            scrimColor = Color.Black.copy(alpha = 0.6f)
         ) {
             Column(
                 modifier = Modifier
