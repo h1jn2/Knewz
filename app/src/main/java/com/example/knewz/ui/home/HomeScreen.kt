@@ -33,6 +33,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.knewz.ui.components.NewsCard
+import com.example.knewz.ui.components.NewsDetailSheet
 import com.example.knewz.ui.components.Tag
 import com.example.knewz.ui.theme.AccentPurple
 import com.example.knewz.ui.theme.StrokeGray
@@ -48,6 +53,7 @@ import com.example.knewz.ui.theme.StrokeGray
 @Composable
 fun HomeScreen() {
     val scrollState = rememberScrollState()
+    var showSheet by remember { mutableStateOf(false) }
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
@@ -121,7 +127,9 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(16.dp))
             Column {
                 repeat(3) {
-                    NewsCard()
+                    NewsCard(onClick = {
+                        showSheet = true
+                    })
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
@@ -139,10 +147,18 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(16.dp))
             Column {
                 repeat(3) {
-                    NewsCard()
+                    NewsCard(onClick = {
+                        showSheet = true
+                    })
                     Spacer(modifier = Modifier.height(16.dp))
                 }
             }
+            NewsDetailSheet(
+                isVisible = showSheet,
+                onDismissRequest = {
+                    showSheet = false
+                }
+            )
         }
     }
 }
