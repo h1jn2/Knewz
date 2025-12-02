@@ -1,11 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    id("org.jetbrains.kotlin.kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.compose.compiler)
 }
-
+hilt {
+    enableAggregatingTask = false
+}
 android {
     namespace = "com.example.knewz"
     compileSdk = 36
@@ -29,6 +31,10 @@ android {
             )
         }
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -47,18 +53,17 @@ dependencies {
     implementation(libs.compose.nav)
     implementation(libs.coroutines.core)
     implementation(libs.lifecycle.viewmodel.compose)
-
+    implementation(libs.landscapist.glide)
     implementation(libs.lifecycle.viewmodel.ktx)
 
-    // Hilt
+// Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
-    // Room
+// Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    kapt(libs.room.compiler)
-    implementation(libs.landscapist.glide)
+    ksp(libs.room.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -79,4 +84,5 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.gson)
     implementation(libs.converter.gson)
+    implementation(libs.androidx.hilt.navigation.compose)
 }
