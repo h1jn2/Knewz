@@ -10,10 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.knewz.data.model.News
+import com.example.knewz.data.remote.NewsItem
 import com.example.knewz.ui.theme.StrokeGray
 
 @Composable
-fun NewsCard(onClick: () -> Unit) {
+fun NewsCard(onClick: () -> Unit, news: NewsItem) {
     val imageUrl =
         "https://blog.kakaocdn.net/dna/byIZZL/btsMyrQRWb9/AAAAAAAAAAAAAAAAAAAAAPG3vMG0hs5TXAjhk5fglaLksnKIs1thKShAX_CExXzA/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1764514799&allow_ip=&allow_referer=&signature=vn0p%2Ft5YNxZGCCnHv3bkWZwFyuU%3D"
     Card(

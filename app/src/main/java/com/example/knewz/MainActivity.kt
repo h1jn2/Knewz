@@ -18,7 +18,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.knewz.navigation.AppNavigation
 import com.example.knewz.navigation.BottomNavItem
 import com.example.knewz.ui.theme.KnewzTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
