@@ -33,7 +33,7 @@ class NewsRepository @Inject constructor(
     suspend fun getNews(query: String, display: Int = 3, start: Int = 1): Result<List<News>> {
         return try {
             val response = apiService.searchNews(
-                query = URLEncoder.encode(query, "UTF-8"),
+                query = query,
                 display = display,
                 start = start,
                 clientId = clientId,

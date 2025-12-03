@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
     private val _newsList = MutableStateFlow<List<News>>(emptyList())
     val newsList: StateFlow<List<News>> = _newsList
 
-    fun loadNews(query: String = "%20") {
+    fun loadNews(query: String = "속보") {
         viewModelScope.launch {
             val result = getNewsUseCase.execute(query)
             result.onSuccess { list ->
