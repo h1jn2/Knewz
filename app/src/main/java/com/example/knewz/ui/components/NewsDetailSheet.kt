@@ -88,7 +88,7 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        NewsMetaRow()
+                        NewsMetaRow("", null)
                         ActionIconButton("스크랩", Icons.Outlined.Bookmark)
                     }
                     Spacer(Modifier.height(8.dp))

@@ -86,5 +86,5 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.logging.interceptor)
-
+    implementation(libs.jsoup)
 }

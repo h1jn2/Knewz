@@ -1,6 +1,6 @@
 package com.example.knewz.data.model
 
-import java.sql.Timestamp
+import java.util.Date
 
 data class News(
     val newsId: String = "",
@@ -10,7 +10,7 @@ data class News(
     val source: String = "", // 언론사
     val category: String = "", // 카테고리
     val thumbnail: String? = null, // 썸네일 URL
-    val publishedAt: Timestamp? = null, // 발행 시각
+    val publishedAt: Date? = null, // 발행 시각
     val aiScore: Double = 0.0, // AI 추천 점수
     val viewCount: Int = 0, // 조회수
     val scrapCount: Int = 0 // 스크랩 수

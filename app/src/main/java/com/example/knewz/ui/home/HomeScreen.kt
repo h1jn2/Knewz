@@ -64,7 +64,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     var showSheet by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.loadNews("주식") // 초기 로딩
+        viewModel.loadNews() // 초기 로딩
     }
 
     Scaffold(
@@ -100,7 +100,6 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
             ) {
                 CircularProgressIndicator()
             }
-            Log.d("hjn", "왜 안 떠 !!")
         } else {
             LazyColumn(
                 modifier = Modifier
@@ -153,14 +152,14 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }
-                items(newsList) { news ->
-                    NewsCard(
-                        onClick = {
-                            showSheet = true
-                        },
-                        news = news
-                    )
-                }
+//                items(newsList) { news ->
+//                    NewsCard(
+//                        onClick = {
+//                            showSheet = true
+//                        },
+//                        news = news
+//                    )
+//                }
                 item {
                     Row(
                         verticalAlignment = Alignment.CenterVertically

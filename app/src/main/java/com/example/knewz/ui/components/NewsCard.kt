@@ -1,5 +1,6 @@
 package com.example.knewz.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,10 +16,8 @@ import com.example.knewz.data.remote.NewsItem
 import com.example.knewz.ui.theme.StrokeGray
 
 @Composable
-fun NewsCard(onClick: () -> Unit, news: NewsItem) {
-    val imageUrl =
-        "https://blog.kakaocdn.net/dna/byIZZL/btsMyrQRWb9/AAAAAAAAAAAAAAAAAAAAAPG3vMG0hs5TXAjhk5fglaLksnKIs1thKShAX_CExXzA/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1764514799&allow_ip=&allow_referer=&signature=vn0p%2Ft5YNxZGCCnHv3bkWZwFyuU%3D"
-    Card(
+fun NewsCard(onClick: () -> Unit, news: News) {
+   Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
@@ -26,6 +25,9 @@ fun NewsCard(onClick: () -> Unit, news: NewsItem) {
         border = BorderStroke(1.dp, StrokeGray),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        NewsContentSummary(imageUrl)
+        NewsContentSummary(news)
+        Log.d("hjn", news.title)
+        Log.d("hjn", news.thumbnail ?: "업슴")
+        Log.d("hjn", news.url)
     }
 }
