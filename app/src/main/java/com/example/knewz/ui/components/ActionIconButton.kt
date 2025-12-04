@@ -3,6 +3,7 @@ package com.example.knewz.ui.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +25,12 @@ import androidx.compose.ui.unit.dp
 import com.example.knewz.ui.theme.StrokeGray
 
 @Composable
-fun ActionIconButton(tagName: String, imageVector: ImageVector, modifier: Modifier = Modifier) {
+fun ActionIconButton(
+    onClick: () -> Unit,
+    tagName: String,
+    imageVector: ImageVector,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier
             .sizeIn(minWidth = 50.dp, minHeight = 24.dp)
@@ -33,6 +39,7 @@ fun ActionIconButton(tagName: String, imageVector: ImageVector, modifier: Modifi
                 BorderStroke(1.dp, StrokeGray),
                 RoundedCornerShape(10.dp)
             )
+            .clickable(onClick = onClick)
             .padding(horizontal = 8.dp, vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

@@ -1,5 +1,7 @@
 package com.example.knewz.ui.components
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,6 +32,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -40,10 +43,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsDetailSheet(news: News?, isVisible: Boolean, onDismissRequest: () -> Unit) {
-
     if (isVisible && news != null) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         val scope = rememberCoroutineScope()
+        val context = LocalContext.current
         val closeSheet: () -> Unit = {
             scope.launch { sheetState.hide() }.invokeOnCompletion {
                 if (!sheetState.isVisible) onDismissRequest()
@@ -88,7 +91,11 @@ fun NewsDetailSheet(news: News?, isVisible: Boolean, onDismissRequest: () -> Uni
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         NewsMetaRow(news.source, news.publishedAt)
-                        ActionIconButton("스크랩", Icons.Outlined.Bookmark)
+                        ActionIconButton(
+                            onClick = {},
+                            tagName = "스크랩",
+                            imageVector = Icons.Outlined.Bookmark
+                        )
                     }
                     Spacer(Modifier.height(8.dp))
                     TagsRow()
@@ -107,11 +114,29 @@ fun NewsDetailSheet(news: News?, isVisible: Boolean, onDismissRequest: () -> Uni
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        ActionIconButton("공유하기", Icons.Outlined.Share, Modifier.weight(1f))
+                        ActionIconButton(
+                            onClick = {},
+                            tagName = "공유하기",
+                            imageVector = Icons.Outlined.Share,
+                            modifier = Modifier.weight(1f)
+                        )
                         Spacer(Modifier.width(8.dp))
-                        ActionIconButton("원문보기", Icons.AutoMirrored.Outlined.OpenInNew, Modifier.weight(1f))
+                        ActionIconButton(
+                            onClick = {
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(news.url))
+                                context.startActivity(intent)
+                            },
+                            tagName = "원문사이트",
+                            imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
+                            modifier = Modifier.weight(1f)
+                        )
                         Spacer(Modifier.width(8.dp))
-                        ActionIconButton("링크 복사", Icons.Outlined.Link, Modifier.weight(1f))
+                        ActionIconButton(
+                            onClick = {},
+                            tagName = "링크 복사",
+                            imageVector = Icons.Outlined.Link,
+                            modifier = Modifier.weight(1f)
+                        )
                     }
                     Spacer(Modifier.height(16.dp))
                     NewsStatsBar(1234, 12, 45)
