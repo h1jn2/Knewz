@@ -50,6 +50,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.knewz.data.model.News
 import com.example.knewz.ui.components.NewsCard
 import com.example.knewz.ui.components.NewsDetailSheet
 import com.example.knewz.ui.components.Tag
@@ -62,6 +63,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val newsList by viewModel.newsList.collectAsState()
     val scrollState = rememberScrollState()
     var showSheet by remember { mutableStateOf(false) }
+    var clickedNews: News? by remember { mutableStateOf(null) }
 
     LaunchedEffect(Unit) {
         viewModel.loadNews() // 초기 로딩
@@ -179,12 +181,14 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                     NewsCard(
                         onClick = {
                             showSheet = true
+                            clickedNews = news
                         },
                         news = news
                     )
                 }
             }
             NewsDetailSheet(
+                news = clickedNews,
                 isVisible = showSheet,
                 onDismissRequest = {
                     showSheet = false

@@ -26,8 +26,5 @@ fun NewsCard(onClick: () -> Unit, news: News) {
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         NewsContentSummary(news)
-        Log.d("hjn", news.title)
-        Log.d("hjn", news.thumbnail ?: "업슴")
-        Log.d("hjn", news.url)
     }
 }

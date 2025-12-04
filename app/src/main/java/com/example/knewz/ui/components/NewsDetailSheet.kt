@@ -33,16 +33,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.knewz.data.model.News
 import com.example.knewz.ui.theme.StrokeGray
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
-    val imageUrl =
-        "https://blog.kakaocdn.net/dna/byIZZL/btsMyrQRWb9/AAAAAAAAAAAAAAAAAAAAAPG3vMG0hs5TXAjhk5fglaLksnKIs1thKShAX_CExXzA/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1764514799&allow_ip=&allow_referer=&signature=vn0p%2Ft5YNxZGCCnHv3bkWZwFyuU%3D"
+fun NewsDetailSheet(news: News?, isVisible: Boolean, onDismissRequest: () -> Unit) {
 
-    if (isVisible) {
+    if (isVisible && news != null) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         val scope = rememberCoroutineScope()
         val closeSheet: () -> Unit = {
@@ -65,7 +64,7 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                     .fillMaxSize()
                     .background(Color.White)
             ) {
-                DetailSheetHeader(imageUrl, closeSheet)
+                DetailSheetHeader(news.thumbnail ?: "", closeSheet)
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -75,7 +74,7 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                 ) {
                     Spacer(Modifier.height(24.dp))
                     Text(
-                        text = "AI 스타트업 투자 급증, 글로벌 트렌드 분석",
+                        text = news.title,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
@@ -88,7 +87,7 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        NewsMetaRow("", null)
+                        NewsMetaRow(news.source, news.publishedAt)
                         ActionIconButton("스크랩", Icons.Outlined.Bookmark)
                     }
                     Spacer(Modifier.height(8.dp))
@@ -97,13 +96,7 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                     AIQuoteBlock("AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약")
                     Spacer(Modifier.height(24.dp))
                     Text(
-                        text = "올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 \n" +
-                                "\n" +
-                                "올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 \n" +
-                                "\n" +
-                                "올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 스타트업 투자가\n" +
-                                "\n" +
-                                "올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 ",
+                        text = news.content,
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Spacer(Modifier.height(24.dp))
