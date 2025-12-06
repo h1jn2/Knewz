@@ -1,5 +1,7 @@
 package com.example.knewz.ui.components
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,21 +32,21 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.knewz.data.model.News
 import com.example.knewz.ui.theme.StrokeGray
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
-    val imageUrl =
-        "https://blog.kakaocdn.net/dna/byIZZL/btsMyrQRWb9/AAAAAAAAAAAAAAAAAAAAAPG3vMG0hs5TXAjhk5fglaLksnKIs1thKShAX_CExXzA/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1764514799&allow_ip=&allow_referer=&signature=vn0p%2Ft5YNxZGCCnHv3bkWZwFyuU%3D"
-
-    if (isVisible) {
+fun NewsDetailSheet(news: News?, isVisible: Boolean, onDismissRequest: () -> Unit) {
+    if (isVisible && news != null) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         val scope = rememberCoroutineScope()
+        val context = LocalContext.current
         val closeSheet: () -> Unit = {
             scope.launch { sheetState.hide() }.invokeOnCompletion {
                 if (!sheetState.isVisible) onDismissRequest()
@@ -65,7 +67,7 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                     .fillMaxSize()
                     .background(Color.White)
             ) {
-                DetailSheetHeader(imageUrl, closeSheet)
+                DetailSheetHeader(news.thumbnail ?: "", closeSheet)
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -75,7 +77,7 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                 ) {
                     Spacer(Modifier.height(24.dp))
                     Text(
-                        text = "AI 스타트업 투자 급증, 글로벌 트렌드 분석",
+                        text = news.title,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
@@ -88,8 +90,12 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        NewsMetaRow()
-                        ActionIconButton("스크랩", Icons.Outlined.Bookmark)
+                        NewsMetaRow(news.source, news.publishedAt)
+                        ActionIconButton(
+                            onClick = {},
+                            tagName = "스크랩",
+                            imageVector = Icons.Outlined.Bookmark
+                        )
                     }
                     Spacer(Modifier.height(8.dp))
                     TagsRow()
@@ -97,13 +103,7 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                     AIQuoteBlock("AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약")
                     Spacer(Modifier.height(24.dp))
                     Text(
-                        text = "올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 \n" +
-                                "\n" +
-                                "올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 \n" +
-                                "\n" +
-                                "올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 스타트업 투자가\n" +
-                                "\n" +
-                                "올해 인공지능 분야 스타트업 투자가 전년 대비 150% 증가하며 ",
+                        text = news.content,
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Spacer(Modifier.height(24.dp))
@@ -114,11 +114,29 @@ fun NewsDetailSheet(isVisible: Boolean, onDismissRequest: () -> Unit) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        ActionIconButton("공유하기", Icons.Outlined.Share, Modifier.weight(1f))
+                        ActionIconButton(
+                            onClick = {},
+                            tagName = "공유하기",
+                            imageVector = Icons.Outlined.Share,
+                            modifier = Modifier.weight(1f)
+                        )
                         Spacer(Modifier.width(8.dp))
-                        ActionIconButton("원문보기", Icons.AutoMirrored.Outlined.OpenInNew, Modifier.weight(1f))
+                        ActionIconButton(
+                            onClick = {
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(news.url))
+                                context.startActivity(intent)
+                            },
+                            tagName = "원문사이트",
+                            imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
+                            modifier = Modifier.weight(1f)
+                        )
                         Spacer(Modifier.width(8.dp))
-                        ActionIconButton("링크 복사", Icons.Outlined.Link, Modifier.weight(1f))
+                        ActionIconButton(
+                            onClick = {},
+                            tagName = "링크 복사",
+                            imageVector = Icons.Outlined.Link,
+                            modifier = Modifier.weight(1f)
+                        )
                     }
                     Spacer(Modifier.height(16.dp))
                     NewsStatsBar(1234, 12, 45)

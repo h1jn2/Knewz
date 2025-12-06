@@ -19,11 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.knewz.data.model.News
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
-fun NewsContentSummary(imageUrl: String) {
+fun NewsContentSummary(news: News) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,7 +32,7 @@ fun NewsContentSummary(imageUrl: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         GlideImage(
-            imageModel = { imageUrl },
+            imageModel = { news.thumbnail },
             modifier = Modifier
                 .size(80.dp)
                 .clip(RoundedCornerShape(10.dp)),
@@ -45,14 +46,14 @@ fun NewsContentSummary(imageUrl: String) {
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = "Title",
+                text = news.title,
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.Black,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(8.dp))
-            NewsMetaRow()
+            NewsMetaRow(news.source, news.publishedAt)
             Spacer(modifier = Modifier.height(8.dp))
             TagsRow()
         }
