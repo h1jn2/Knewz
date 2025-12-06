@@ -2,6 +2,7 @@ package com.example.knewz.ui.components
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,7 +43,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsDetailSheet(news: News?, isVisible: Boolean, onDismissRequest: () -> Unit) {
+fun NewsDetailSheet(aiSummaryText: String, news: News?, isVisible: Boolean, onDismissRequest: () -> Unit) {
     if (isVisible && news != null) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         val scope = rememberCoroutineScope()
@@ -100,7 +101,7 @@ fun NewsDetailSheet(news: News?, isVisible: Boolean, onDismissRequest: () -> Uni
                     Spacer(Modifier.height(8.dp))
                     TagsRow()
                     Spacer(Modifier.height(24.dp))
-                    AIQuoteBlock("AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약AI 요약")
+                    AIQuoteBlock(aiSummaryText = aiSummaryText)
                     Spacer(Modifier.height(24.dp))
                     Text(
                         text = news.content,

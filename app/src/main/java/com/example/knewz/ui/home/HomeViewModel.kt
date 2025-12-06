@@ -2,6 +2,7 @@ package com.example.knewz.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.knewz.ai.GeminiHelper
 import com.example.knewz.data.model.News
 import com.example.knewz.data.remote.NewsItem
 import com.example.knewz.domain.usecase.GetNewsUseCase
@@ -10,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +22,9 @@ class HomeViewModel @Inject constructor(
 
     private val _newsList = MutableStateFlow<List<News>>(emptyList())
     val newsList: StateFlow<List<News>> = _newsList
+
+    private val _summary = MutableStateFlow("요약 대기중…")
+    val summary = _summary.asStateFlow()
 
     fun loadNews(query: String = "속보") {
         viewModelScope.launch {
@@ -37,6 +42,15 @@ class HomeViewModel @Inject constructor(
                         }
                     }
                 }
+            }
+        }
+    }
+    fun summarize(article: String) {
+        viewModelScope.launch {
+            try {
+                _summary.value = GeminiHelper.summarize(article)
+            } catch (e: Exception) {
+                _summary.value = "오류 발생: ${e.message}"
             }
         }
     }
