@@ -71,7 +71,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
 
     LaunchedEffect(clickedNews) {
         clickedNews?.let {
-            viewModel.summarize(it.url)
+            viewModel.summarizeNewsItem(it)
         }
     }
 
