@@ -10,6 +10,7 @@ import com.example.knewz.ui.keyword.KeywordScreen
 import com.example.knewz.ui.mypage.MyPageScreen
 import com.example.knewz.ui.notif.NotifScreen
 import com.example.knewz.ui.scrap.ScrapScreen
+import com.example.knewz.ui.search.SearchScreen
 
 
 @Composable
@@ -19,10 +20,17 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         startDestination = BottomNavItem.Home.route,
         modifier = modifier
     ) {
-        composable(BottomNavItem.Home.route) { HomeScreen() }
+        composable(BottomNavItem.Home.route) { HomeScreen(
+            onNavigateToSearch = { navController.navigate("search/main") }
+        ) }
         composable(BottomNavItem.Keyword.route) { KeywordScreen() }
         composable(BottomNavItem.Scrap.route) { ScrapScreen() }
         composable(BottomNavItem.Notif.route) { NotifScreen() }
         composable(BottomNavItem.MyPage.route) { MyPageScreen() }
+        composable("search/main") {
+            SearchScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
     }
 }
