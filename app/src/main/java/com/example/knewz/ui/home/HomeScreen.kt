@@ -61,12 +61,18 @@ import com.example.knewz.ui.theme.StrokeGray
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     val newsList by viewModel.newsList.collectAsState()
-    val scrollState = rememberScrollState()
+    val summary by viewModel.summary.collectAsState()
     var showSheet by remember { mutableStateOf(false) }
     var clickedNews: News? by remember { mutableStateOf(null) }
 
     LaunchedEffect(Unit) {
-        viewModel.loadNews() // 초기 로딩
+        viewModel.loadNews()
+    }
+
+    LaunchedEffect(clickedNews) {
+        clickedNews?.let {
+            viewModel.summarizeNewsItem(it)
+        }
     }
 
     Scaffold(
@@ -188,6 +194,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                 }
             }
             NewsDetailSheet(
+                aiSummaryText = summary,
                 news = clickedNews,
                 isVisible = showSheet,
                 onDismissRequest = {

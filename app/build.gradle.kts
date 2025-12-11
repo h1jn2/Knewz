@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,11 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
 }
+val localProperties = Properties().apply {
+    load(project.rootProject.file("local.properties").inputStream())
+}
+val GEMINI_API_KEY: String = localProperties.getProperty("GEMINI_API_KEY") ?: ""
+
 hilt {
     enableAggregatingTask = false
 }
@@ -20,6 +27,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField ("String", "GEMINI_API_KEY", "\"${GEMINI_API_KEY}\"")
     }
 
     buildTypes {
@@ -44,6 +52,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -87,4 +96,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.logging.interceptor)
     implementation(libs.jsoup)
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.8.0")
 }
