@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,6 +52,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.knewz.data.model.News
 import com.example.knewz.ui.components.NewsCard
 import com.example.knewz.ui.components.NewsDetailSheet
@@ -59,11 +62,15 @@ import com.example.knewz.ui.theme.StrokeGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToSearch: () -> Unit
+) {
     val newsList by viewModel.newsList.collectAsState()
     val summary by viewModel.summary.collectAsState()
     var showSheet by remember { mutableStateOf(false) }
     var clickedNews: News? by remember { mutableStateOf(null) }
+    val interactionSource = remember { MutableInteractionSource() }
 
     LaunchedEffect(Unit) {
         viewModel.loadNews()
@@ -119,7 +126,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                         top = paddingValues.calculateTopPadding(),
                         bottom = paddingValues.calculateBottomPadding()
                     ),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
@@ -129,6 +136,11 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
                             .background(Color.White, RoundedCornerShape(10.dp))
                             .border(BorderStroke(1.dp, StrokeGray), RoundedCornerShape(10.dp))
                             .padding(12.dp)
+                            .clickable(
+                                interactionSource = interactionSource,
+                                indication = null,
+                                onClick = onNavigateToSearch,
+                            )
                     ) {
                         Icon(imageVector = Icons.Outlined.Search, contentDescription = "Search")
                         Spacer(modifier = Modifier.width(4.dp))
