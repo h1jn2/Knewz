@@ -47,7 +47,8 @@ fun SearchBox(
         }
         Spacer(Modifier.width(4.dp))
         Surface(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            color = Color.White
         ) {
             OutlinedTextField(
                 value = searchText,
