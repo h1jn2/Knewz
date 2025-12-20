@@ -23,7 +23,8 @@ import com.example.knewz.ui.components.SearchBox
 @Composable
 fun SearchScreen(
     searchViewModel: SearchViewModel = hiltViewModel(),
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onSearch: (String) -> Unit
 ) {
     val searchText by searchViewModel.searchText.collectAsState()
     val tagList = listOf("검색어", "검색어", "검색어", "검색어", "검색어", "검색어")
@@ -33,7 +34,9 @@ fun SearchScreen(
             SearchBox(
                 searchText = searchText,
                 onSearchTextChanged = searchViewModel::onSearchTextChanged,
-                onSearchAction = searchViewModel::executeSearch,
+                onSearchAction = {
+                    searchViewModel.executeSearch(onNavigate = onSearch)
+                },
                 onBack = onBack,
             )
         }
