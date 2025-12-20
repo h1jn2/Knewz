@@ -26,11 +26,16 @@ import androidx.compose.ui.unit.dp
 import com.example.knewz.ui.theme.StrokeGray
 
 @Composable
-fun RemovableTag(tagName: String) {
+fun RemovableTag(
+    tagName: String,
+    onClick: () -> Unit,
+    onRemove: () -> Unit
+) {
     Row(
         modifier = Modifier
             .sizeIn(minWidth = 50.dp, minHeight = 24.dp)
             .background(Color.White, RoundedCornerShape(10.dp))
+            .clickable { onClick() }
             .border(
                 BorderStroke(1.dp, StrokeGray),
                 RoundedCornerShape(10.dp)
@@ -43,7 +48,7 @@ fun RemovableTag(tagName: String) {
             contentDescription = "Clear",
             modifier = Modifier
                 .size(18.dp)
-                .clickable {}
+                .clickable { onRemove() }
         )
         Spacer(Modifier.width(4.dp))
         Text(
