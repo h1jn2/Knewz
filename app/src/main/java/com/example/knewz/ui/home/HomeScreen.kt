@@ -195,7 +195,7 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                 }
-                items(newsList) { news ->
+                items(newsList.take(3)) { news ->
                     NewsCard(
                         onClick = {
                             showSheet = true
