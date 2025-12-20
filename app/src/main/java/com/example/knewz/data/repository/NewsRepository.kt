@@ -38,7 +38,7 @@ class NewsRepository @Inject constructor(
     private val clientId = "e3gMBUEjpc3fih0_5vMr"
     private val clientSecret = "vsZiRQhQ59"
 
-    suspend fun getNews(query: String, display: Int = 3, start: Int = 1): Result<List<News>> {
+    suspend fun getNews(query: String, display: Int = 50, start: Int = 1): Result<List<News>> {
         return try {
             val response = apiService.searchNews(
                 query = query,
