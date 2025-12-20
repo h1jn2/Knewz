@@ -10,7 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RemovableTagsRow(tags: List<String>) {
+fun RemovableTagsRow(
+    tags: List<String>,
+    onTagClick: (String) -> Unit,
+    onRemoveClick: (String) -> Unit
+) {
     val scrollState = rememberScrollState()
     Row (
         modifier = Modifier
@@ -19,7 +23,11 @@ fun RemovableTagsRow(tags: List<String>) {
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         tags.forEach { tag ->
-            RemovableTag(tagName = tag)
+            RemovableTag(
+                tagName = tag,
+                onClick = { onTagClick(tag) },
+                onRemove = { onRemoveClick(tag) }
+            )
         }
     }
 }

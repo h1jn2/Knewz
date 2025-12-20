@@ -26,16 +26,21 @@ import androidx.compose.ui.unit.dp
 import com.example.knewz.ui.theme.StrokeGray
 
 @Composable
-fun RemovableTag(tagName: String) {
+fun RemovableTag(
+    tagName: String,
+    onClick: () -> Unit,
+    onRemove: () -> Unit
+) {
     Row(
         modifier = Modifier
-            .sizeIn(minWidth = 50.dp, minHeight = 24.dp)
-            .background(Color.White, RoundedCornerShape(10.dp))
+            .sizeIn(minWidth = 50.dp, minHeight = 40.dp)
+            .background(Color.White, RoundedCornerShape(20.dp))
+            .clickable { onClick() }
             .border(
                 BorderStroke(1.dp, StrokeGray),
-                RoundedCornerShape(10.dp)
+                RoundedCornerShape(20.dp)
             )
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -43,12 +48,12 @@ fun RemovableTag(tagName: String) {
             contentDescription = "Clear",
             modifier = Modifier
                 .size(18.dp)
-                .clickable {}
+                .clickable { onRemove() }
         )
-        Spacer(Modifier.width(4.dp))
+        Spacer(Modifier.width(8.dp))
         Text(
             text = tagName,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.bodyLarge,
             color = Color.Black
         )
     }

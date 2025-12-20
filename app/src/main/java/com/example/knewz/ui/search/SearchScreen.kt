@@ -27,7 +27,8 @@ fun SearchScreen(
     onSearch: (String) -> Unit
 ) {
     val searchText by searchViewModel.searchText.collectAsState()
-    val tagList = listOf("검색어", "검색어", "검색어", "검색어", "검색어", "검색어")
+    val historyList by searchViewModel.searchHistory.collectAsState()
+
     Scaffold(
         containerColor = Color.White,
         topBar = {
@@ -53,7 +54,19 @@ fun SearchScreen(
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.Black
             )
-            RemovableTagsRow(tagList)
+            if (historyList.isEmpty()) {
+                Text(
+                    text = "최근 검색 기록이 없습니다.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
+                )
+            } else {
+                RemovableTagsRow(
+                    tags = historyList,
+                    onTagClick = { tag -> onSearch(tag) },
+                    onRemoveClick = { tag -> searchViewModel.deleteSearchHistory(tag) }
+                )
+            }
         }
     }
 }
