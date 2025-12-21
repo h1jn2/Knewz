@@ -1,5 +1,7 @@
 package com.example.knewz.ui.theme
 
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 // ====================================================================
@@ -61,3 +63,14 @@ val TextMediumGray = Color(0xFF666666)
 val TextLightGray = Color(0xFF717171)
 val StrokeGray = Color(0xFFD9D9D9)
 val LightGray = Color(0xFFE8E8E8)
+
+// 그라데이션
+val AI_SUMMARY_BRUSH = Brush.linearGradient(
+    colors = listOf(
+        PurpleLight,
+        BlueLight,
+        Color.White
+    ),
+    start = Offset(0f, 0f),
+    end = Offset(1000f, 1400f)
+)
