@@ -9,14 +9,24 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +37,9 @@ import com.example.knewz.ui.theme.TextMediumGray
 
 @Composable
 fun LoginForm() {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     Text(text = "로그인", style = MaterialTheme.typography.titleLarge, color = Color.Black)
     Spacer(Modifier.height(4.dp))
     Text(
@@ -37,9 +50,26 @@ fun LoginForm() {
 
     Spacer(Modifier.height(16.dp))
 
-    InputField(label = "이메일", placeholder = "example@email.com")
+    InputField(
+        label = "이메일",
+        placeholder = "example@email.com",
+        value = email,
+        onValueChange = { email = it },
+        leadingIcon = {
+            Icon(Icons.Outlined.Email, contentDescription = null)
+        }
+    )
     Spacer(Modifier.height(16.dp))
-    InputField(label = "비밀번호", placeholder = "••••••••", isPassword = true)
+    InputField(
+        label = "비밀번호",
+        placeholder = "••••••••",
+        value = password,
+        onValueChange = { password = it },
+        isPassword = true,
+        leadingIcon = {
+            Icon(Icons.Outlined.Lock, contentDescription = null)
+        }
+    )
 
     Spacer(Modifier.height(16.dp))
 
