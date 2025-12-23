@@ -25,20 +25,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.knewz.ui.theme.AI_SUMMARY_BRUSH
 import com.example.knewz.ui.theme.BlueLight
 import com.example.knewz.ui.theme.PurpleDark
 import com.example.knewz.ui.theme.PurpleLight
 import com.example.knewz.ui.theme.PurpleMid
-
-val AI_SUMMARY_BRUSH = Brush.linearGradient(
-    colors = listOf(
-        PurpleLight,
-        BlueLight,
-        Color.White
-    ),
-    start = Offset(0f, 0f),
-    end = Offset(1000f, 1400f)
-)
 
 @Composable
 fun AIQuoteBlock(aiSummaryText: String) {
