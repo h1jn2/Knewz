@@ -37,11 +37,16 @@ import com.example.knewz.ui.theme.StrokeGray
 import com.example.knewz.ui.theme.TextMediumGray
 
 @Composable
-fun LoginForm() {
+fun LoginForm(onNavigateToSignUp: () -> Unit) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    Text(text = "로그인", style = MaterialTheme.typography.titleLarge, color = Color.Black)
+    Text(
+        text = "로그인",
+        style = MaterialTheme.typography.titleLarge,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black
+    )
     Spacer(Modifier.height(4.dp))
     Text(
         text = "계정에 로그인하여 맞춤 뉴스를 받아보세요",
@@ -132,7 +137,7 @@ fun LoginForm() {
             color = TextMediumGray
         )
         Spacer(Modifier.width(4.dp))
-        TextButton(onClick = { }) {
+        TextButton(onClick = { onNavigateToSignUp() }) {
             Text("회원가입", fontWeight = FontWeight.Bold, color = Color.Black)
         }
     }

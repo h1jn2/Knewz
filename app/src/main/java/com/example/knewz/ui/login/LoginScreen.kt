@@ -17,7 +17,7 @@ import com.example.knewz.ui.components.LoginHeader
 import com.example.knewz.ui.theme.AI_SUMMARY_BRUSH
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onNavigateToSignUp: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -26,10 +26,10 @@ fun LoginScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LoginHeader()
+        LoginHeader(true,"키워드로 보는 내 뉴스")
         Spacer(Modifier.height(24.dp))
         LoginCard {
-            LoginForm()
+            LoginForm(onNavigateToSignUp)
         }
     }
 }
