@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.knewz.R
 import com.example.knewz.ui.theme.StrokeGray
 import com.example.knewz.ui.theme.TextMediumGray
 
@@ -111,17 +112,15 @@ fun LoginForm() {
     }
 
     Spacer(Modifier.height(16.dp))
+    SocialLoginButton (
+        imageRes = R.drawable.ic_google_logo,
+        text = "Google 계정으로 로그인",
+        textColor = Color.Black,
+        backgroundColor = Color.White,
+        onClick = {
 
-    OutlinedButton(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(48.dp),
-        onClick = {},
-        shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, StrokeGray)
-    ) {
-        Text("구글로 계속하기", color = Color.Black)
-    }
+        }
+    )
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
