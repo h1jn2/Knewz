@@ -16,7 +16,7 @@ import com.example.knewz.R
 import com.example.knewz.ui.theme.TextMediumGray
 
 @Composable
-fun LoginHeader(title: String, content: String) {
+fun LoginHeader(content: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = R.drawable.knewz_icon),
@@ -25,13 +25,7 @@ fun LoginHeader(title: String, content: String) {
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = "키워드로 보는 내 뉴스",
-            style = MaterialTheme.typography.titleSmall,
-            color = TextMediumGray
-        )
-        Spacer(Modifier.height(16.dp))
-        Text(
-            text = "키워드로 보는 내 뉴스",
+            text = content,
             style = MaterialTheme.typography.titleSmall,
             color = TextMediumGray
         )

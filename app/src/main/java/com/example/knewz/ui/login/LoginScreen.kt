@@ -26,7 +26,7 @@ fun LoginScreen(onNavigateToSignUp: () -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LoginHeader(true,"키워드로 보는 내 뉴스")
+        LoginHeader("키워드로 보는 내 뉴스")
         Spacer(Modifier.height(24.dp))
         LoginCard {
             LoginForm(onNavigateToSignUp)

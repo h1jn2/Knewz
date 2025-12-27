@@ -35,8 +35,6 @@ fun SignUpScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LoginHeader(false, "맞춤 뉴스를 받아보세요")
-            Spacer(Modifier.height(24.dp))
             LoginCard {
                 SignUpForm()
             }

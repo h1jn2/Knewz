@@ -42,8 +42,7 @@ fun InputField(
             onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp)
-                .defaultMinSize(minHeight = 52.dp),
+                .defaultMinSize(minHeight = 48.dp),
             placeholder = {
                 Text(text = placeholder, color = Color.Gray)
             },
