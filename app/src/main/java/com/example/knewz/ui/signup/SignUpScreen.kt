@@ -1,4 +1,4 @@
-package com.example.knewz.ui.login
+package com.example.knewz.ui.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,25 +12,32 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.knewz.ui.components.LoginCard
-import com.example.knewz.ui.components.LoginForm
 import com.example.knewz.ui.components.LoginHeader
+import com.example.knewz.ui.components.SignUpForm
+import com.example.knewz.ui.components.TransparentAppBar
 import com.example.knewz.ui.theme.AI_SUMMARY_BRUSH
 
 @Composable
-fun LoginScreen(onNavigateToSignUp: () -> Unit) {
+fun SignUpScreen(
+    onBack: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(brush = AI_SUMMARY_BRUSH)
-            .padding(horizontal = 24.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LoginHeader("키워드로 보는 내 뉴스")
-        Spacer(Modifier.height(24.dp))
-        LoginCard {
-            LoginForm(onNavigateToSignUp)
+        TransparentAppBar(onBack)
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            LoginCard {
+                SignUpForm()
+            }
         }
     }
 }
-

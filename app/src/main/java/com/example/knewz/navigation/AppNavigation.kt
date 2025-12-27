@@ -10,11 +10,13 @@ import androidx.navigation.navArgument
 import androidx.room.util.query
 import com.example.knewz.ui.home.HomeScreen
 import com.example.knewz.ui.keyword.KeywordScreen
+import com.example.knewz.ui.login.LoginScreen
 import com.example.knewz.ui.mypage.MyPageScreen
 import com.example.knewz.ui.notif.NotifScreen
 import com.example.knewz.ui.scrap.ScrapScreen
 import com.example.knewz.ui.search.SearchScreen
 import com.example.knewz.ui.search_detail.SearchDetailScreen
+import com.example.knewz.ui.signup.SignUpScreen
 
 
 @Composable
@@ -42,7 +44,17 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         composable(BottomNavItem.Keyword.route) { KeywordScreen() }
         composable(BottomNavItem.Scrap.route) { ScrapScreen() }
         composable(BottomNavItem.Notif.route) { NotifScreen() }
-        composable(BottomNavItem.MyPage.route) { MyPageScreen() }
+        composable(BottomNavItem.MyPage.route) {
+            LoginScreen(
+                onNavigateToSignUp = { navController.navigate("login/signup") }
+            )
+        }
+
+        composable("login/signup") {
+            SignUpScreen(
+                onBack = { navController.popBackStack() }
+            )
+        }
         composable("search/main") {
             SearchScreen(
                 onBack = { navController.popBackStack() },
