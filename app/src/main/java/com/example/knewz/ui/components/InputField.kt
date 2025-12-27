@@ -24,9 +24,11 @@ fun InputField(
     value: String,
     onValueChange: (String) -> Unit,
     isPassword: Boolean = false,
-    leadingIcon: @Composable (() -> Unit)? = null
+    leadingIcon: @Composable (() -> Unit)? = null,
+    errorMessage: String? = null
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
+    val isError = errorMessage != null
 
     Column {
         Text(
@@ -43,6 +45,7 @@ fun InputField(
             modifier = Modifier
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = 48.dp),
+            isError = isError,
             placeholder = {
                 Text(text = placeholder, color = Color.Gray)
             },
@@ -70,14 +73,22 @@ fun InputField(
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color(0xFFF2F2F2),
                 unfocusedContainerColor = Color(0xFFF2F2F2),
-                disabledContainerColor = Color(0xFFF2F2F2),
 
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = if (isError) Color.Red else Color.Transparent,
+                unfocusedIndicatorColor = if (isError) Color.Red else Color.Transparent,
 
-                cursorColor = MaterialTheme.colorScheme.primary
+                errorIndicatorColor = Color.Red,
+                errorContainerColor = Color(0xFFF2F2F2),
+                errorCursorColor = Color.Red
             )
         )
+        if (isError) {
+            Text(
+                text = errorMessage!!,
+                color = Color.Red,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 4.dp, top = 4.dp)
+            )
+        }
     }
 }

@@ -57,7 +57,12 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
 
         composable("login/signup") {
             SignUpScreen(
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onSignUpSuccess = {
+                    navController.navigate(BottomNavItem.MyPage.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
             )
         }
         composable("search/main") {
