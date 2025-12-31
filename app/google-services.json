@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "508686915858",
+    "project_id": "knewz-e9aa3",
+    "storage_bucket": "knewz-e9aa3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508686915858:android:eddf2b6b6eae9845fd7bcb",
+        "android_client_info": {
+          "package_name": "com.example.knewz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508686915858-laujad620mfe2tk266vg75pt83uj860h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.knewz",
+            "certificate_hash": "c6a181f611f86a3c6f5e57d7a4df7c91e5925cd2"
+          }
+        },
+        {
+          "client_id": "508686915858-6j6lrs7chsop1an0nl5he73i6ljt7cev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW8M77PRCuC8KETVER7VcOjVUR6NCRsMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508686915858-6j6lrs7chsop1an0nl5he73i6ljt7cev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

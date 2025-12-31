@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
+    id("com.google.gms.google-services")
 }
 val localProperties = Properties().apply {
     load(project.rootProject.file("local.properties").inputStream())
@@ -67,6 +68,10 @@ dependencies {
 
 // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
     ksp(libs.hilt.compiler)
 
 // Room
@@ -97,5 +102,8 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.jsoup)
 
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.play.services.auth)
     implementation("com.google.ai.client.generativeai:generativeai:0.8.0")
 }

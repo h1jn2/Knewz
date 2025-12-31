@@ -19,7 +19,8 @@ import com.example.knewz.ui.theme.AI_SUMMARY_BRUSH
 
 @Composable
 fun SignUpScreen(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onSignUpSuccess: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -36,7 +37,7 @@ fun SignUpScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LoginCard {
-                SignUpForm()
+                SignUpForm(onSignUpSuccess = onSignUpSuccess)
             }
         }
     }

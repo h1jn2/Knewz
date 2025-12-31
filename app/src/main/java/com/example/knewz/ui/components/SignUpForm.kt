@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -14,12 +15,15 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,15 +33,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.knewz.R
+import com.example.knewz.ui.login.AuthUiState
+import com.example.knewz.ui.signup.SignUpViewModel
 import com.example.knewz.ui.theme.StrokeGray
 import com.example.knewz.ui.theme.TextMediumGray
 
 @Composable
-fun SignUpForm() {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun SignUpForm(
+    viewModel: SignUpViewModel = hiltViewModel(),
+    onSignUpSuccess: () -> Unit
+) {
+    val uiState by viewModel.uiState.collectAsState()
 
+    LaunchedEffect(uiState) {
+        if (uiState is AuthUiState.Success) {
+            onSignUpSuccess()
+        }
+    }
     Text(
         text = "계정 만들기",
         style = MaterialTheme.typography.titleLarge,
@@ -55,8 +69,9 @@ fun SignUpForm() {
     InputField(
         label = "이름",
         placeholder = "홍길동",
-        value = email,
-        onValueChange = { email = it },
+        value = viewModel.name,
+        onValueChange = { viewModel.name = it },
+        errorMessage = viewModel.nameError,
         leadingIcon = {
             Icon(Icons.Outlined.PersonOutline, contentDescription = null)
         }
@@ -65,8 +80,9 @@ fun SignUpForm() {
     InputField(
         label = "이메일",
         placeholder = "example@email.com",
-        value = email,
-        onValueChange = { email = it },
+        value = viewModel.email,
+        onValueChange = { viewModel.email = it },
+        errorMessage = viewModel.emailError,
         leadingIcon = {
             Icon(Icons.Outlined.Email, contentDescription = null)
         }
@@ -75,9 +91,10 @@ fun SignUpForm() {
     InputField(
         label = "비밀번호",
         placeholder = "8자 이상 입력",
-        value = password,
-        onValueChange = { password = it },
+        value = viewModel.password,
+        onValueChange = { viewModel.password = it },
         isPassword = true,
+        errorMessage = viewModel.passwordError,
         leadingIcon = {
             Icon(Icons.Outlined.Lock, contentDescription = null)
         }
@@ -86,9 +103,10 @@ fun SignUpForm() {
     InputField(
         label = "비밀번호 확인",
         placeholder = "비밀번호 재입력",
-        value = password,
-        onValueChange = { password = it },
+        value = viewModel.confirmPassword,
+        onValueChange = { viewModel.confirmPassword = it },
         isPassword = true,
+        errorMessage = viewModel.confirmPasswordError,
         leadingIcon = {
             Icon(Icons.Outlined.Lock, contentDescription = null)
         }
@@ -100,11 +118,16 @@ fun SignUpForm() {
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp),
-        onClick = {},
+        onClick = { viewModel.signUp {} },
         shape = RoundedCornerShape(12.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+        colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+        enabled = uiState !is AuthUiState.Loading
     ) {
-        Text("회원가입", style = MaterialTheme.typography.bodyLarge)
+        if (uiState is AuthUiState.Loading) {
+            CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
+        } else {
+            Text("회원가입", style = MaterialTheme.typography.bodyLarge)
+        }
     }
 
 }

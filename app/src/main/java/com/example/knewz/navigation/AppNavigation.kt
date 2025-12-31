@@ -45,15 +45,24 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
         composable(BottomNavItem.Scrap.route) { ScrapScreen() }
         composable(BottomNavItem.Notif.route) { NotifScreen() }
         composable(BottomNavItem.MyPage.route) {
-//            LoginScreen(
-//                onNavigateToSignUp = { navController.navigate("login/signup") }
-//            )
-            MyPageScreen {  }
+            LoginScreen(
+                onNavigateToSignUp = { navController.navigate("login/signup") },
+                onLoginSuccess = {
+                    navController.navigate(BottomNavItem.Home.route) {
+                        popUpTo(BottomNavItem.Home.route) { inclusive = true }
+                    }
+                }
+            )
         }
 
         composable("login/signup") {
             SignUpScreen(
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onSignUpSuccess = {
+                    navController.navigate(BottomNavItem.MyPage.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
             )
         }
         composable("search/main") {
