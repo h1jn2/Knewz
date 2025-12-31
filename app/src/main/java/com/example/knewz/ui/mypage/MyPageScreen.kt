@@ -38,13 +38,17 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.knewz.ui.components.Tag
 import com.example.knewz.ui.theme.StrokeGray
 import com.example.knewz.ui.theme.TextLightGray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyPageScreen(onNavigate: (String) -> Unit) {
+fun MyPageScreen(
+    viewModel: MyPageViewModel = hiltViewModel(),
+    onNavigate: (String) -> Unit
+) {
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
@@ -87,13 +91,13 @@ fun MyPageScreen(onNavigate: (String) -> Unit) {
                     modifier = Modifier.padding(24.dp)
                 ) {
                     Text(
-                        text = "홍길동",
+                        text = viewModel.userName,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         color = Black
                     )
                     Text(
-                        text = "example@email.com",
+                        text = viewModel.userEmail,
                         style = MaterialTheme.typography.bodySmall,
                         color = TextLightGray
                     )
