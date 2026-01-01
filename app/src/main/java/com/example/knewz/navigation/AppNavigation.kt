@@ -54,14 +54,30 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
                 }
             )
         }
+        composable(BottomNavItem.MyPage.route) {
+            val currentUser = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+
+            if (currentUser == null) {
+                LoginScreen(
+                    onNavigateToSignUp = { navController.navigate("login/signup") },
+                    onLoginSuccess = {
+                        navController.navigate(BottomNavItem.MyPage.route) {
+                            popUpTo(BottomNavItem.MyPage.route) { inclusive = true }
+                        }
+                    }
+                )
+            } else {
+                MyPageScreen(
+                    onNavigate = { route -> navController.navigate(route) }
+                )
+            }
+        }
 
         composable("login/signup") {
             SignUpScreen(
                 onBack = { navController.popBackStack() },
                 onSignUpSuccess = {
-                    navController.navigate(BottomNavItem.MyPage.route) {
-                        popUpTo(0) { inclusive = true }
-                    }
+                    navController.popBackStack()
                 }
             )
         }
