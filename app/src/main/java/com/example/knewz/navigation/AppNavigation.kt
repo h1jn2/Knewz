@@ -12,6 +12,7 @@ import com.example.knewz.ui.home.HomeScreen
 import com.example.knewz.ui.keyword.KeywordScreen
 import com.example.knewz.ui.login.LoginScreen
 import com.example.knewz.ui.mypage.MyPageScreen
+import com.example.knewz.ui.mypage.profile.ProfileScreen
 import com.example.knewz.ui.notif.NotifScreen
 import com.example.knewz.ui.scrap.ScrapScreen
 import com.example.knewz.ui.search.SearchScreen
@@ -55,7 +56,8 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
             )
         }
         composable(BottomNavItem.MyPage.route) {
-            val currentUser = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+            val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
+            val currentUser = auth.currentUser
 
             if (currentUser == null) {
                 LoginScreen(
@@ -72,7 +74,21 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
                 )
             }
         }
-
+        composable("profile") {
+            ProfileScreen(
+                onBack = { navController.popBackStack() },
+                onLogout = {
+                    navController.navigate(BottomNavItem.MyPage.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                },
+                onDeleteAccount = {
+                    navController.navigate(BottomNavItem.MyPage.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
+        }
         composable("login/signup") {
             SignUpScreen(
                 onBack = { navController.popBackStack() },

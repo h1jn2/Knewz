@@ -58,9 +58,9 @@ fun LoginForm(
     onLoginSuccess: () -> Unit
 ) {
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val email by viewModel.email.collectAsState()
+    val password by viewModel.password.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     val googleSignInLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -82,12 +82,6 @@ fun LoginForm(
             .build()
         GoogleSignIn.getClient(context, gso)
     }
-    val uiState by viewModel.uiState.collectAsState()
-    LaunchedEffect(uiState) {
-        if (uiState is AuthUiState.Success) {
-            onLoginSuccess()
-        }
-    }
 
     Text(
         text = "로그인",
@@ -108,7 +102,7 @@ fun LoginForm(
         label = "이메일",
         placeholder = "example@email.com",
         value = email,
-        onValueChange = { email = it },
+        onValueChange = { viewModel.onEmailChange(it) },
         leadingIcon = {
             Icon(Icons.Outlined.Email, contentDescription = null)
         }
@@ -118,7 +112,7 @@ fun LoginForm(
         label = "비밀번호",
         placeholder = "••••••••",
         value = password,
-        onValueChange = { password = it },
+        onValueChange = { viewModel.onPasswordChange(it) },
         isPassword = true,
         leadingIcon = {
             Icon(Icons.Outlined.Lock, contentDescription = null)
@@ -134,7 +128,7 @@ fun LoginForm(
         onClick = { viewModel.login() },
         shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-        enabled = uiState !is AuthUiState.Loading
+        enabled = uiState !is AuthUiState.Loading && email.isNotBlank() && password.isNotBlank()
     ) {
         if (uiState is AuthUiState.Loading) {
             CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
