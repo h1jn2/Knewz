@@ -132,14 +132,36 @@ fun ScrapScreen(
                     )
                 }
 
-                if (searchResults.isEmpty() && searchText.isNotBlank()) {
+                if (searchResults.isEmpty()) {
                     item {
-                        Text(
-                            text = "검색 결과가 없습니다.",
-                            modifier = Modifier.fillMaxWidth().padding(top = 40.dp),
-                            textAlign = TextAlign.Center,
-                            color = Color.Gray
-                        )
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 80.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            if (searchText.isBlank()) {
+                                Text(
+                                    text = "스크랩한 뉴스가 없습니다.",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = Color.Gray,
+                                    textAlign = TextAlign.Center
+                                )
+                                Text(
+                                    text = "관심 있는 뉴스를 스크랩해 보세요.",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = Color.LightGray,
+                                    textAlign = TextAlign.Center
+                                )
+                            } else {
+                                Text(
+                                    text = "'$searchText'에 대한\n검색 결과가 없습니다.",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = Color.Gray,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
                     }
                 }
             }
