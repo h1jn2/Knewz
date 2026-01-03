@@ -48,10 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.knewz.ui.components.ConfirmDeleteDialog
 import com.example.knewz.ui.components.EditNameDialog
-import com.example.knewz.ui.components.ProfileEditRow
-import com.example.knewz.ui.components.ProfileInfoRow
 import com.example.knewz.ui.components.ProfileItemRow
-import com.example.knewz.ui.components.ProfileMenuRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
