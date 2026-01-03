@@ -97,6 +97,31 @@ class NewsRepository @Inject constructor(
         }
     }
 
+    suspend fun searchNews(query: String, isDescending: Boolean): List<News> {
+        if (query.isBlank()) return emptyList()
+
+        return try {
+            val response = apiService.searchNews(
+                query = query,
+                display = 50,
+                start = 1,
+                sort = if (isDescending) "date" else "sim",
+                clientId = clientId,
+                clientSecret = clientSecret
+            )
+
+            val newsList = response.items.map { it.toNews() }
+
+            if (isDescending) {
+                newsList.sortedByDescending { it.publishedAt }
+            } else {
+                newsList.sortedBy { it.publishedAt }
+            }
+        } catch (e: Exception) {
+            Log.e("SearchNews", "Error: ${e.message}")
+            emptyList()
+        }
+    }
 
     private fun NewsItem.toNews(): News {
         val processedTitle = stripHtmlTags(this.title)
