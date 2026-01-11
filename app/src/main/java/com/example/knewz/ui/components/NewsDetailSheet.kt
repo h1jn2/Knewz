@@ -29,7 +29,11 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,6 +57,7 @@ fun NewsDetailSheet(aiSummaryText: String, news: News?, isVisible: Boolean, onDi
                 if (!sheetState.isVisible) onDismissRequest()
             }
         }
+        var isScrapped by remember { mutableStateOf(false) }
 
         ModalBottomSheet(
             onDismissRequest = onDismissRequest,
@@ -92,10 +97,11 @@ fun NewsDetailSheet(aiSummaryText: String, news: News?, isVisible: Boolean, onDi
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         NewsMetaRow(news.source, news.publishedAt)
-                        ActionIconButton(
-                            onClick = {},
-                            tagName = "스크랩",
-                            imageVector = Icons.Outlined.Bookmark
+                        ScrapToggleButton(
+                            isScrapped = isScrapped,
+                            onClick = {
+                                isScrapped = !isScrapped
+                            }
                         )
                     }
                     Spacer(Modifier.height(8.dp))
