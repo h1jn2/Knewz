@@ -3,6 +3,7 @@ package com.example.knewz.ui.components
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -101,6 +102,11 @@ fun NewsDetailSheet(aiSummaryText: String, news: News?, isVisible: Boolean, onDi
                             isScrapped = isScrapped,
                             onClick = {
                                 isScrapped = !isScrapped
+                                if (isScrapped) {
+                                    Toast.makeText(context, "내 스크랩에 저장 되었습니다 !", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(context, "내 스크랩에서 삭제 되었습니다 !", Toast.LENGTH_SHORT).show()
+                                }
                             }
                         )
                     }
