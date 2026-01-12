@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.knewz.data.model.News
 import com.example.knewz.ui.components.NewsCard
 import com.example.knewz.ui.components.NewsDetailSheet
@@ -40,6 +41,7 @@ import com.example.knewz.ui.components.SearchBox
 fun SearchDetailScreen(
     query: String,
     viewModel: SearchDetailViewModel = hiltViewModel(),
+    navController: NavController,
     onBack: () -> Unit,
     onSearch: (String) -> Unit
 ) {
@@ -106,6 +108,7 @@ fun SearchDetailScreen(
             aiSummaryText = summary,
             news = clickedNews,
             isVisible = showSheet,
+            navController = navController,
             onDismissRequest = {
                 showSheet = false
             }
