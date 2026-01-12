@@ -63,6 +63,7 @@ import com.example.knewz.ui.theme.StrokeGray
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    navController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel(),
     onNavigateToSearch: () -> Unit
 ) {
@@ -209,6 +210,7 @@ fun HomeScreen(
                 aiSummaryText = summary,
                 news = clickedNews,
                 isVisible = showSheet,
+                navController = navController,
                 onDismissRequest = {
                     showSheet = false
                 }

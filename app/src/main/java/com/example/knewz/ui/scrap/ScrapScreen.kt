@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.knewz.data.model.News
 import com.example.knewz.ui.components.NewsCard
 import com.example.knewz.ui.components.NewsDetailSheet
@@ -48,7 +49,8 @@ import com.example.knewz.ui.theme.StrokeGray
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScrapScreen(
-    viewModel: ScrapViewModel = hiltViewModel()
+    viewModel: ScrapViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val searchText by viewModel.searchText.collectAsState()
     val isDescending by viewModel.isDescending.collectAsState()
@@ -170,6 +172,7 @@ fun ScrapScreen(
                     aiSummaryText = summary,
                     news = clickedNews,
                     isVisible = showSheet,
+                    navController = navController,
                     onDismissRequest = {
                         showSheet = false
                         viewModel.resetSummary()

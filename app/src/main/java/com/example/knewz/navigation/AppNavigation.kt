@@ -29,39 +29,29 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
     ) {
         val onSearchNavigate: (String) -> Unit = { query ->
             if (query.isNotBlank()) {
-                navController.navigate("search/$query") {
-                    popUpTo("search/main") { saveState = true }
+                navController.navigate(Route.searchDetail(query)) {
                     launchSingleTop = true
-                    restoreState = true
                 }
             }
         }
 
         composable(BottomNavItem.Home.route) {
             HomeScreen(
-                onNavigateToSearch = { navController.navigate("search/main") }
+                navController = navController,
+                onNavigateToSearch = { navController.navigate(Route.SEARCH_MAIN) }
             )
         }
         composable(BottomNavItem.Keyword.route) { KeywordScreen() }
-        composable(BottomNavItem.Scrap.route) { ScrapScreen() }
+        composable(BottomNavItem.Scrap.route) { ScrapScreen(navController = navController) }
         composable(BottomNavItem.Notif.route) { NotifScreen() }
-        composable(BottomNavItem.MyPage.route) {
-            LoginScreen(
-                onNavigateToSignUp = { navController.navigate("login/signup") },
-                onLoginSuccess = {
-                    navController.navigate(BottomNavItem.Home.route) {
-                        popUpTo(BottomNavItem.Home.route) { inclusive = true }
-                    }
-                }
-            )
-        }
+
         composable(BottomNavItem.MyPage.route) {
             val auth = com.google.firebase.auth.FirebaseAuth.getInstance()
             val currentUser = auth.currentUser
 
             if (currentUser == null) {
                 LoginScreen(
-                    onNavigateToSignUp = { navController.navigate("login/signup") },
+                    onNavigateToSignUp = { navController.navigate(Route.SIGNUP) },
                     onLoginSuccess = {
                         navController.navigate(BottomNavItem.MyPage.route) {
                             popUpTo(BottomNavItem.MyPage.route) { inclusive = true }
@@ -74,7 +64,8 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
                 )
             }
         }
-        composable("profile") {
+
+        composable(Route.PROFILE) {
             ProfileScreen(
                 onBack = { navController.popBackStack() },
                 onLogout = {
@@ -89,33 +80,31 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
                 }
             )
         }
-        composable("login/signup") {
+
+        composable(Route.SIGNUP) {
             SignUpScreen(
                 onBack = { navController.popBackStack() },
-                onSignUpSuccess = {
-                    navController.popBackStack()
-                }
+                onSignUpSuccess = { navController.popBackStack() }
             )
         }
-        composable("search/main") {
+
+        composable(Route.SEARCH_MAIN) {
             SearchScreen(
                 onBack = { navController.popBackStack() },
                 onSearch = onSearchNavigate
             )
         }
+
         composable(
-            "search/{query}",
+            route = Route.SEARCH_DETAIL,
             arguments = listOf(navArgument("query") { type = NavType.StringType })
         ) { backStackEntry ->
             val query = backStackEntry.arguments?.getString("query") ?: ""
             SearchDetailScreen(
                 query = query,
                 onBack = { navController.popBackStack() },
-                onSearch = { newQuery ->
-                    navController.navigate("search/$newQuery") {
-                        popUpTo("search/{query}") { inclusive = true }
-                    }
-                }
+                navController = navController,
+                onSearch = onSearchNavigate
             )
         }
     }
