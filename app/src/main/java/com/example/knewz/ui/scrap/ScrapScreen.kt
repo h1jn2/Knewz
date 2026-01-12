@@ -60,6 +60,9 @@ fun ScrapScreen(
     var showSheet by remember { mutableStateOf(false) }
     var clickedNews: News? by remember { mutableStateOf(null) }
 
+    LaunchedEffect(Unit) {
+        viewModel.observeScrappedList()
+    }
     LaunchedEffect(clickedNews) {
         clickedNews?.let {
             viewModel.summarizeNewsItem(it)

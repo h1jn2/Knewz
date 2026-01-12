@@ -34,6 +34,8 @@ class ScrapViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val database: FirebaseDatabase,
 ) : ViewModel() {
+    private val _allScraps = MutableStateFlow<List<News>>(emptyList())
+
     private var scrapListener: ValueEventListener? = null
     private var currentScrapRef: DatabaseReference? = null
 
@@ -51,22 +53,46 @@ class ScrapViewModel @Inject constructor(
     val summary = _summary.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-    val searchResults = combine(_searchText, _isDescending) { query, isDesc ->
-        query to isDesc
-    }.debounce(400L)
-        .flatMapLatest { (query, isDesc) ->
-            flow {
-                if (query.isBlank()) {
-                    emit(emptyList<News>())
-                } else {
-                    emit(newsRepository.searchNews(query, isDesc))
+    val searchResults = combine(_allScraps, _searchText, _isDescending) { scraps, query, isDesc ->
+        val filtered = if (query.isBlank()) {
+            scraps
+        } else {
+            scraps.filter { it.title.contains(query, ignoreCase = true) }
+        }
+
+        if (isDesc) filtered else filtered.reversed()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
+
+    fun observeScrappedList() {
+        val uid = auth.currentUser?.uid ?: return
+        val scrapsRef = database.getReference("users/$uid/scraps")
+
+        scrapsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val items = mutableListOf<News>()
+                snapshot.children.forEach { child ->
+                    val news = News(
+                        title = child.child("title").value.toString(),
+                        source = child.child("source").value.toString(),
+                        url = child.child("url").value.toString(),
+                        thumbnail = child.child("thumbnail").value.toString(),
+                        content = "",
+                    )
+                    items.add(news)
                 }
+                // 2. 정렬 상태에 따라 데이터 업데이트 (최신순 등)
+                _allScraps.value = items.reversed()
             }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
-        )
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("ScrapVM", "데이터 읽기 실패: ${error.message}")
+            }
+        })
+    }
 
     fun observeScrapStatus(news: News) {
         val user = auth.currentUser
