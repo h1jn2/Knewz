@@ -1,5 +1,6 @@
 package com.example.knewz.ui.keyword
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -24,14 +25,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.knewz.ui.components.KeywordCard
@@ -42,7 +41,13 @@ import com.example.knewz.ui.components.KeywordInputCard
 fun KeywordScreen(
     viewModel: KeywordViewModel = hiltViewModel()
 ) {
-    var keywordList by remember { mutableStateOf(listOf<KeywordItem>()) }
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.toastEvent.collect { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     Scaffold(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -108,7 +113,7 @@ fun KeywordScreen(
                 ) { item ->
                     KeywordCard(
                         item = item,
-                        onDeleteClick = { /* 삭제 로직 연결 */ },
+                        onDeleteClick = { viewModel.deleteKeyword(item) },
                         onToggleClick = { viewModel.toggleNotification(item) }
                     )
                 }
