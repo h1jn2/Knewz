@@ -90,6 +90,7 @@ fun KeywordScreen(
             KeywordInputCard(
                 keyword = viewModel.keywordInput,
                 onKeywordChange = { viewModel.onKeywordInputChanged(it) },
+                keywordList = viewModel.keywordList,
                 onAddClick = {
                     viewModel.registerKeyword()
                 },

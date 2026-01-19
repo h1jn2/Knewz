@@ -15,8 +15,23 @@ class KeywordViewModel @Inject constructor(
     private val repository: KeywordRepository
 ) : ViewModel() {
 
+    var keywordList by mutableStateOf<List<KeywordItem>>(emptyList())
+        private set
+
     var keywordInput by mutableStateOf("")
         private set
+
+    init {
+        loadKeywords()
+    }
+
+    private fun loadKeywords() {
+        viewModelScope.launch {
+            repository.getKeywords().collect { list ->
+                keywordList = list
+            }
+        }
+    }
 
     fun onKeywordInputChanged(newValue: String) {
         keywordInput = newValue

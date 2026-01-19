@@ -25,13 +25,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.knewz.ui.keyword.KeywordItem
 
 @Composable
 fun KeywordInputCard(
     keyword: String,
+    keywordList: List<KeywordItem>,
     onKeywordChange: (String) -> Unit,
     onAddClick: () -> Unit
 ) {
+    val hangulRegex = "^[가-힣a-zA-Z0-9\\s]*$".toRegex()
+
+    val isInvalidFormat = keyword.isNotEmpty() && !hangulRegex.matches(keyword)
+    val isInvalidLength = keyword.isNotEmpty() && (keyword.trim().length < 2 || keyword.trim().length > 10)
+    val isDuplicate = keywordList.any { it.keyword == keyword.trim() }
+
+    val isError = isInvalidFormat || isDuplicate || (keyword.length > 10)
+
+    val isButtonEnabled = keyword.trim().length in 2..10 && !isDuplicate && !isInvalidFormat
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -60,7 +72,10 @@ fun KeywordInputCard(
         ) {
             OutlinedTextField(
                 value = keyword,
-                onValueChange = onKeywordChange,
+                onValueChange = {
+                    if (it.length <= 11) onKeywordChange(it)
+                },
+                isError = isError,
                 placeholder = {
                     Text(
                         text = "예: 인공지능, 주식",
@@ -77,6 +92,7 @@ fun KeywordInputCard(
                     unfocusedContainerColor = Color.White,
                     focusedBorderColor = Color(0xFF4A90E2),
                     unfocusedBorderColor = Color.LightGray.copy(alpha = 0.5f),
+                    errorBorderColor = Color.Red.copy(alpha = 0.5f),
                     cursorColor = Color(0xFF4A90E2)
                 )
             )
@@ -85,7 +101,7 @@ fun KeywordInputCard(
 
             Button(
                 onClick = onAddClick,
-                enabled = keyword.isNotBlank(),
+                enabled = isButtonEnabled,
                 modifier = Modifier.height(56.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = androidx.compose.material3.ButtonDefaults.buttonColors(
@@ -99,6 +115,23 @@ fun KeywordInputCard(
                     imageVector = Icons.Outlined.Add,
                     contentDescription = null,
                     modifier = Modifier.size(18.dp)
+                )
+            }
+        }
+
+        if (isError || (isInvalidLength && keyword.isNotEmpty())) {
+            val errorMessage = when {
+                isDuplicate -> "* 이미 등록된 키워드입니다."
+                isInvalidFormat -> "* 완성된 한글로 입력해주세요."
+                isInvalidLength -> "* 2자~10자 사이로 입력해주세요."
+                else -> ""
+            }
+            if (errorMessage.isNotEmpty()) {
+                Text(
+                    text = errorMessage,
+                    color = Color.Red.copy(alpha = 0.8f),
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = Modifier.padding(top = 4.dp, start = 4.dp)
                 )
             }
         }
