@@ -97,11 +97,17 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
 
         composable(
             route = Route.SEARCH_DETAIL,
-            arguments = listOf(navArgument("query") { type = NavType.StringType })
+            arguments = listOf(
+                navArgument("query") { type = NavType.StringType },
+                navArgument("fromKeyword") { type = NavType.BoolType }
+            )
         ) { backStackEntry ->
             val query = backStackEntry.arguments?.getString("query") ?: ""
+            val fromKeyword = backStackEntry.arguments?.getBoolean("fromKeyword") ?: false
+
             SearchDetailScreen(
                 query = query,
+                fromKeyword = fromKeyword,
                 onBack = { navController.popBackStack() },
                 navController = navController,
                 onSearch = onSearchNavigate

@@ -5,8 +5,9 @@ object Route {
     const val SIGNUP = "signup"
     const val PROFILE = "profile"
     const val SEARCH_MAIN = "search/main"
-    const val SEARCH_DETAIL = "search/{query}"
+    const val SEARCH_DETAIL = "search_detail/{query}/{fromKeyword}"
 
     // 유틸리티 함수
-    fun searchDetail(query: String) = "search/$query"
+    fun searchDetail(query: String, fromKeyword: Boolean = false) =
+        "search_detail/$query/$fromKeyword"
 }

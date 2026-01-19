@@ -120,7 +120,7 @@ fun KeywordScreen(
                         item = item,
                         onCardClick = {
                             if (item.keyword.isNotBlank()) {
-                                navController.navigate(Route.searchDetail(item.keyword)) {
+                                navController.navigate(Route.searchDetail(item.keyword, true)) {
                                     launchSingleTop = true
                                 }
                             }
