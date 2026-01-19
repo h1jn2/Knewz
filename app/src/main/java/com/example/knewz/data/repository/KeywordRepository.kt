@@ -17,6 +17,7 @@ interface KeywordRepository {
     suspend fun addKeyword(keywordName: String): Result<Unit>
     fun getKeywords(): Flow<List<KeywordItem>>
     suspend fun updateNotifyEnabled(keywordId: String, isEnabled: Boolean): Result<Unit>
+    suspend fun deleteKeyword(keywordId: String): Result<Unit>
 }
 
 class KeywordRepositoryImpl @Inject constructor(
@@ -53,7 +54,7 @@ class KeywordRepositoryImpl @Inject constructor(
                 val items = snapshot.children.mapNotNull { child ->
                     child.getValue(KeywordItem::class.java)?.copy(id = child.key ?: "")
                 }
-                trySend(items) // UI로 데이터 전송
+                trySend(items)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -75,6 +76,23 @@ class KeywordRepositoryImpl @Inject constructor(
                 .child("keywords")
                 .child(keywordId)
                 .updateChildren(updates)
+                .await()
+
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun deleteKeyword(keywordId: String): Result<Unit> {
+        return try {
+            val uid = auth.currentUser?.uid ?: throw Exception("로그인이 필요합니다.")
+
+            database.child("users")
+                .child(uid)
+                .child("keywords")
+                .child(keywordId)
+                .removeValue()
                 .await()
 
             Result.success(Unit)
