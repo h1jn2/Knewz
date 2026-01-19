@@ -47,4 +47,10 @@ class KeywordViewModel @Inject constructor(
             }
         }
     }
+
+    fun toggleNotification(item: KeywordItem) {
+        viewModelScope.launch {
+            val result = repository.updateNotifyEnabled(item.id, !item.notifyEnabled)
+        }
+    }
 }

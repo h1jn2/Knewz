@@ -109,7 +109,7 @@ fun KeywordScreen(
                     KeywordCard(
                         item = item,
                         onDeleteClick = { /* 삭제 로직 연결 */ },
-                        onToggleClick = { /* 알림 설정 변경 로직 연결 */ }
+                        onToggleClick = { viewModel.toggleNotification(item) }
                     )
                 }
             }
