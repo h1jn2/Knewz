@@ -33,13 +33,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.knewz.ui.components.KeywordCard
 import com.example.knewz.ui.components.KeywordInputCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KeywordScreen() {
-    var keyword by remember { mutableStateOf("") }
+fun KeywordScreen(
+    viewModel: KeywordViewModel = hiltViewModel()
+) {
     var keywordList by remember { mutableStateOf(listOf<KeywordItem>()) }
 
     Scaffold(
@@ -86,18 +88,12 @@ fun KeywordScreen() {
             Spacer(modifier = Modifier.height(16.dp))
 
             KeywordInputCard(
-                keyword = keyword,
-                onKeywordChange = { keyword = it },
+                keyword = viewModel.keywordInput,
+                onKeywordChange = { viewModel.onKeywordInputChanged(it) },
+                keywordList = viewModel.keywordList,
                 onAddClick = {
-                    if (keyword.isNotBlank()) {
-                        val newItem = KeywordItem(
-                            name = keyword,
-                            date = "2026.01.19"
-                        )
-                        keywordList = keywordList + newItem
-                        keyword = ""
-                    }
-                }
+                    viewModel.registerKeyword()
+                },
             )
             Spacer(modifier = Modifier.height(16.dp))
 

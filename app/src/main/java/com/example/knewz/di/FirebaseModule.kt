@@ -1,6 +1,9 @@
 package com.example.knewz.di
 
+import com.example.knewz.data.repository.KeywordRepository
+import com.example.knewz.data.repository.KeywordRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
@@ -23,4 +26,17 @@ object FirebaseModule {
     fun provideFirebaseDatabase(): FirebaseDatabase {
         return FirebaseDatabase.getInstance()
     }
+
+    @Provides
+    @Singleton
+    fun provideDatabaseReference(database: FirebaseDatabase): DatabaseReference {
+        return database.reference
+    }
+
+    @Provides
+    @Singleton
+    fun provideKeywordRepository(
+        database: DatabaseReference,
+        auth: FirebaseAuth
+    ): KeywordRepository = KeywordRepositoryImpl(database, auth)
 }
