@@ -16,6 +16,7 @@ import javax.inject.Inject
 interface KeywordRepository {
     suspend fun addKeyword(keywordName: String): Result<Unit>
     fun getKeywords(): Flow<List<KeywordItem>>
+    suspend fun updateNotifyEnabled(keywordId: String, isEnabled: Boolean): Result<Unit>
 }
 
 class KeywordRepositoryImpl @Inject constructor(
@@ -64,4 +65,21 @@ class KeywordRepositoryImpl @Inject constructor(
         awaitClose { ref.removeEventListener(listener) }
     }
 
+    override suspend fun updateNotifyEnabled(keywordId: String, isEnabled: Boolean): Result<Unit> {
+        return try {
+            val uid = auth.currentUser?.uid ?: throw Exception("로그인이 필요합니다.")
+
+            val updates = mapOf("notifyEnabled" to isEnabled)
+
+            database.child("users").child(uid)
+                .child("keywords")
+                .child(keywordId)
+                .updateChildren(updates)
+                .await()
+
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

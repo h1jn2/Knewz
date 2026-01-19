@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.knewz.ui.keyword.KeywordItem
+import com.example.knewz.util.formatTimestamp
 
 @Composable
 fun KeywordCard(
@@ -77,7 +78,7 @@ fun KeywordCard(
                 )
                 Spacer(Modifier.height(2.dp))
                 Text(
-                    text = item.date,
+                    text = formatTimestamp(item.createdAt),
                     style = MaterialTheme.typography.labelSmall,
                     color = Color.Gray
                 )
@@ -86,15 +87,15 @@ fun KeywordCard(
             Spacer(Modifier.width(12.dp))
 
             Text(
-                text = if (item.isAlertOn) "ON" else "OFF",
+                text = if (item.notifyEnabled) "ON" else "OFF",
                 style = MaterialTheme.typography.labelMedium,
-                color = if (item.isAlertOn) Color(0xFF67B3EE) else Color.Gray
+                color = if (item.notifyEnabled) Color(0xFF67B3EE) else Color.Gray
             )
 
             Spacer(Modifier.width(6.dp))
 
             Switch(
-                checked = item.isAlertOn,
+                checked = item.notifyEnabled,
                 onCheckedChange = onToggleClick,
                 modifier = Modifier
                     .scale(0.7f)

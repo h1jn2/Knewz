@@ -28,7 +28,7 @@ class KeywordViewModel @Inject constructor(
     private fun loadKeywords() {
         viewModelScope.launch {
             repository.getKeywords().collect { list ->
-                keywordList = list
+                keywordList = list.sortedByDescending { it.createdAt }
             }
         }
     }
@@ -45,6 +45,12 @@ class KeywordViewModel @Inject constructor(
             if (result.isSuccess) {
                 keywordInput = ""
             }
+        }
+    }
+
+    fun toggleNotification(item: KeywordItem) {
+        viewModelScope.launch {
+            val result = repository.updateNotifyEnabled(item.id, !item.notifyEnabled)
         }
     }
 }
