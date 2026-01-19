@@ -33,12 +33,15 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.knewz.navigation.Route
 import com.example.knewz.ui.components.KeywordCard
 import com.example.knewz.ui.components.KeywordInputCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun KeywordScreen(
+    navController: NavController,
     viewModel: KeywordViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -103,7 +106,9 @@ fun KeywordScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             LazyColumn(
-                modifier = Modifier.fillMaxSize().weight(1f),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
                 contentPadding = PaddingValues(bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
@@ -113,6 +118,13 @@ fun KeywordScreen(
                 ) { item ->
                     KeywordCard(
                         item = item,
+                        onCardClick = {
+                            if (item.keyword.isNotBlank()) {
+                                navController.navigate(Route.searchDetail(item.keyword)) {
+                                    launchSingleTop = true
+                                }
+                            }
+                        },
                         onDeleteClick = { viewModel.deleteKeyword(item) },
                         onToggleClick = { viewModel.toggleNotification(item) }
                     )

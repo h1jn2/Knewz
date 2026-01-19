@@ -41,7 +41,7 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
                 onNavigateToSearch = { navController.navigate(Route.SEARCH_MAIN) }
             )
         }
-        composable(BottomNavItem.Keyword.route) { KeywordScreen() }
+        composable(BottomNavItem.Keyword.route) { KeywordScreen(navController = navController) }
         composable(BottomNavItem.Scrap.route) { ScrapScreen(navController = navController) }
         composable(BottomNavItem.Notif.route) { NotifScreen() }
 
