@@ -102,17 +102,14 @@ fun KeywordScreen(
                 contentPadding = PaddingValues(bottom = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                items(keywordList) { item ->
+                items(
+                    items = viewModel.keywordList,
+                    key = { it.id }
+                ) { item ->
                     KeywordCard(
                         item = item,
-                        onDeleteClick = {
-                            keywordList = keywordList.filter { it.id != item.id }
-                        },
-                        onToggleClick = { isOn ->
-                            keywordList = keywordList.map {
-                                if (it.id == item.id) it.copy(isAlertOn = isOn) else it
-                            }
-                        }
+                        onDeleteClick = { /* 삭제 로직 연결 */ },
+                        onToggleClick = { /* 알림 설정 변경 로직 연결 */ }
                     )
                 }
             }

@@ -28,7 +28,7 @@ class KeywordViewModel @Inject constructor(
     private fun loadKeywords() {
         viewModelScope.launch {
             repository.getKeywords().collect { list ->
-                keywordList = list
+                keywordList = list.sortedByDescending { it.createdAt }
             }
         }
     }
