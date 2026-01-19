@@ -62,36 +62,44 @@ fun KeywordInputCard(
                 value = keyword,
                 onValueChange = onKeywordChange,
                 placeholder = {
-                    Text(text = "예: 인공지능, 주식", fontSize = 14.sp)
+                    Text(
+                        text = "예: 인공지능, 주식",
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 modifier = Modifier
                     .weight(1f)
-                    .height(56.dp),
-                shape = RoundedCornerShape(12.dp),
+                    .height(48.dp),
+                shape = RoundedCornerShape(10.dp),
+                singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White,
-                    focusedBorderColor = Color(0xFF67B3EE),
+                    focusedBorderColor = Color(0xFF4A90E2),
                     unfocusedBorderColor = Color.LightGray.copy(alpha = 0.5f),
-                ),
-                singleLine = true
+                    cursorColor = Color(0xFF4A90E2)
+                )
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
             Button(
                 onClick = onAddClick,
-                modifier = Modifier.height(56.dp),
-                shape = RoundedCornerShape(12.dp),
-                enabled = keyword.isNotBlank()
+                enabled = keyword.isNotBlank(),
+                modifier = Modifier.height(48.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF4A90E2),
+                    disabledContainerColor = Color(0xFF4A90E2).copy(alpha = 0.3f),
+                    contentColor = Color.White,
+                    disabledContentColor = Color.White.copy(alpha = 0.6f)
+                )
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Add,
                     contentDescription = null,
                     modifier = Modifier.size(18.dp)
                 )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(text = "등록")
             }
         }
 
