@@ -69,7 +69,7 @@ fun KeywordInputCard(
                 },
                 modifier = Modifier
                     .weight(1f)
-                    .height(48.dp),
+                    .height(56.dp),
                 shape = RoundedCornerShape(10.dp),
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
@@ -86,7 +86,7 @@ fun KeywordInputCard(
             Button(
                 onClick = onAddClick,
                 enabled = keyword.isNotBlank(),
-                modifier = Modifier.height(48.dp),
+                modifier = Modifier.height(56.dp),
                 shape = RoundedCornerShape(10.dp),
                 colors = androidx.compose.material3.ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF4A90E2),
