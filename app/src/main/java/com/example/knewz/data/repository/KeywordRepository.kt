@@ -45,26 +45,36 @@ class KeywordRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getKeywords(): Flow<List<KeywordItem>> = callbackFlow {
-        val uid = auth.currentUser?.uid ?: return@callbackFlow
-        val ref = database.child("users").child(uid).child("keywords")
+    override fun getKeywords(): Flow<List<KeywordItem>> {
+        val uid = auth.currentUser?.uid ?: return kotlinx.coroutines.flow.flowOf(emptyList())
 
-        val listener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val items = snapshot.children.mapNotNull { child ->
-                    child.getValue(KeywordItem::class.java)?.copy(id = child.key ?: "")
+        return callbackFlow {
+            val ref = database.child("users")
+                .child(uid)
+                .child("keywords")
+
+            val listener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val items = snapshot.children.mapNotNull { child ->
+                        child.getValue(KeywordItem::class.java)
+                            ?.copy(id = child.key ?: "")
+                    }
+                    trySend(items)
                 }
-                trySend(items)
+
+                override fun onCancelled(error: DatabaseError) {
+                    close(error.toException())
+                }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                close(error.toException())
+            ref.addValueEventListener(listener)
+
+            awaitClose {
+                ref.removeEventListener(listener)
             }
         }
-
-        ref.addValueEventListener(listener)
-        awaitClose { ref.removeEventListener(listener) }
     }
+
 
     override suspend fun updateNotifyEnabled(keywordId: String, isEnabled: Boolean): Result<Unit> {
         return try {
