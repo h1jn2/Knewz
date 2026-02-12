@@ -24,7 +24,6 @@ fun DetailSheetHeader(imageUrl: String, onCloseClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .offset(y = (-40).dp)
     ) {
         GlideImage(
             imageModel = { imageUrl },
