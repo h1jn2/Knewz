@@ -24,28 +24,25 @@ Knewz는 단순 뉴스 검색 앱이 아닌,
 **Feature-based (MVVM + Clean Architecture 기반)**
 
 ```bash
-com.mukmuk.todori
-├── 📁 data/                   # 데이터 계층
-│   ├── 📁 local.datastore/    # DataStore (로컬 저장소)
-│   ├── 📁 remote/             # 원격 데이터 (Firestore 등)
-│   ├── 📁 repository/         # Repository
-│   └── 📁 service/            # Firebase / API Service
-│
-├── 📁 di/                     # Hilt 의존성 주입 모듈
-├── 📁 navigation/             # 네비게이션 그래프
-│
-├── 📁 ui/                     # UI 계층
-│   ├── 📁 component/          # 공통 UI 컴포넌트
-│   ├── 📁 screen/             # 화면 (로그인, 타이머, TODO, 통계 등)
-│   └── 📁 theme/              # 테마 (색상, 폰트, 스타일)
-│
-├── 📁 util/                   # 유틸리티 클래스 & 헬퍼
-│
-├── 📁 widget/                 # App Widget 관련
-│
-├── MainActivity.kt
-└── TodoriApplication.kt
+📦 Knewz
+├── data        # Firebase + Room (로컬/원격 데이터 소스 및 Repository 구현)
+├── domain      # 비즈니스 로직 (Model, Repository Interface, UseCase)
+└── ui          # 화면 단위 구성 (Screen + ViewModel)
 ```
+
+🔹 data
+* local: Room
+* remote: Firebase Auth / News / Scrap / Keyword
+* repository: 데이터 소스 통합 구현
+
+🔹 domain
+* 순수 모델 정의
+* Repository 인터페이스
+* 기능 단위 UseCase 분리
+
+🔹 ui
+* 기능별 패키지 구성 (home, search, scrap, login)
+* Screen / ViewModel 분리
 
 ---
 
@@ -64,7 +61,6 @@ com.mukmuk.todori
 
 > 본 프로젝트는 MVVM 패턴과 Clean Architecture를 적용하여 계층 간 의존성을 최소화하고 유지보수성을 높였습니다.
 > Firebase를 활용한 **서버리스 구조**로 설계되었습니다.
-<img width="1133" height="494" alt="image" src="https://github.com/user-attachments/assets/209efe52-cf01-4056-aa12-1cff3ee16f09" />
 
 
 ### 구조 설명
@@ -73,9 +69,8 @@ com.mukmuk.todori
 * **Data Layer (Repository, Service)**: 데이터 흐름 계층화, API 호출 관리
 * **Server**:
 
-  * Firebase Firestore – 앱 데이터 저장
+  * Firebase RealtimeDatabase – 앱 데이터 저장
   * Firebase Auth – 사용자 인증
-  * Firebase Cloud Functions – 통계/레벨/알림 처리
 
 ---
 
@@ -88,7 +83,7 @@ com.mukmuk.todori
 | **아키텍처**   | MVVM + Clean Architecture |
 | **비동기 처리** | Coroutines, Flow          |
 | **DI**     | Hilt                      |
-| **로컬 저장소** | Room, DataStore           |
+| **로컬 저장소** | Room           |
 | **인증**     | Firebase Authentication   |
 | **네트워크**   | Retrofit                  |
 | **협업 도구**  | GitHub, Notion            |
