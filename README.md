@@ -35,7 +35,7 @@ Knewz는 단순 뉴스 검색 앱이 아닌,
 
 3. Data Layer (Data Source)
 - Local: Room을 통해 최근 검색어 및 캐시 데이터를 관리합니다.
-- Remote: Retrofit을 이용한 뉴스 API 통신 및 **Firebase(Auth/Realtime DB)**를 통한 사용자 인증과 스크랩 데이터를 관리합니다.
+- Remote: Retrofit을 이용한 뉴스 API 통신 및 Firebase(Auth/Realtime DB)를 통한 사용자 인증과 스크랩 데이터를 관리합니다.
 - Repository Impl: Domain 계층의 인터페이스를 구현하여 데이터 소스를 캡슐화합니다.
 
 --- 
