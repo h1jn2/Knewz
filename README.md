@@ -48,18 +48,18 @@ Knewz는 단순 뉴스 검색 앱이 아닌,
 📦 com.example.knewz
  ┣ 📂 ai             # Gemini AI 연동 및 프롬프트 관리 (GeminiHelper)
  ┣ 📂 data           # 데이터 소스 및 상세 구현 계층
- ┃ ┣ 📂 local        # Room Database, DAO, Entity 관리
- ┃ ┣ 📂 model        # Data Transfer Object (News.kt)
- ┃ ┣ 📂 remote       # Retrofit API Service & Response (NewsApiService)
- ┃ ┣ 📂 repository   # 데이터 로직 구현체 (Repository Impl)
- ┃ ┗ 📂 di           # Hilt를 이용한 의존성 주입 모듈 (Network, Database)
+ ┃ ┣ 📂 local        
+ ┃ ┣ 📂 model        
+ ┃ ┣ 📂 remote       
+ ┃ ┣ 📂 repository   
+ ┃ ┗ 📂 di           
  ┣ 📂 domain         # 순수 비즈니스 로직 계층
- ┃ ┗ 📂 usecase      # 기능 단위 UseCase (GetNews, SummarizeNews 등)
+ ┃ ┗ 📂 usecase      
  ┣ 📂 ui             # Jetpack Compose 기반 UI 계층
- ┃ ┣ 📂 components   # 재사용 가능한 공통 UI 컴포넌트
- ┃ ┣ 📂 navigation   # AppNavigation, BottomNavItem 등 화면 전환 관리
- ┃ ┣ 📂 theme        # 앱 디자인 시스템 (Color, Typography, Theme)
- ┃ ┗ 📂 [Features]   # home, keyword, scrap, search 등 기능별 Screen & ViewModel
+ ┃ ┣ 📂 components   
+ ┃ ┣ 📂 navigation   
+ ┃ ┣ 📂 theme        
+ ┃ ┗ 📂 [Features]   
  ┗ 📂 util           # Application 클래스 및 전역 유틸리티
 ```
 
