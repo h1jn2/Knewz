@@ -13,3 +13,8 @@ fun convertStringToDate(pubDate: String): Date? {
         null
     }
 }
+fun formatTimestamp(timestamp: Long): String {
+    val date = Date(timestamp)
+    val sdf = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+    return sdf.format(date)
+}
