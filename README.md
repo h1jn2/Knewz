@@ -20,16 +20,15 @@ Knewz는 단순 뉴스 검색 앱이 아닌,
 ---
 
 ## 🏗 Architecture & Design Pattern
-본 프로젝트는 Clean Architecture와 MVVM 패턴을 결합하여, 각 계층 간의 결합도를 낮추고 유지보수성과 테스트 용이성을 극대화했습니다.
+본 프로젝트는 Clean Architecture 원칙을 참고하여 MVVM 기반으로 계층을 분리했습니다.
 
 <img width="1408" height="424" alt="Gemini_Generated_Image_4eef5e4eef5e4eef" src="https://github.com/user-attachments/assets/1cd8f7fe-e374-47a5-a183-8993cb69f625" />
 
 1. UI Layer (Presentation)
 - Jetpack Compose를 사용하여 선언적으로 UI를 구성했습니다.
-- ViewModel은 StateFlow를 통해 UI 상태를 관리하며, 단방향 데이터 흐름(UDF)을 유지합니다.
+- ViewModel은 StateFlow를 통해 UI 상태를 관리합니다.
 
 2. Domain Layer (Business Logic)
-- 특정 프레임워크에 의존하지 않는 Pure Kotlin 모듈입니다.
 - UseCase: 기능별(뉴스 가져오기, 요약하기 등)로 로직을 분리하여 재사용성을 높였습니다.
 - Entity/Repository Interface: 데이터의 형태와 통로를 정의합니다.
 
@@ -46,21 +45,15 @@ Knewz는 단순 뉴스 검색 앱이 아닌,
 
 ```bash
 📦 com.example.knewz
- ┣ 📂 ai             # Gemini AI 연동 및 프롬프트 관리 (GeminiHelper)
- ┣ 📂 data           # 데이터 소스 및 상세 구현 계층
- ┃ ┣ 📂 local        
- ┃ ┣ 📂 model        
- ┃ ┣ 📂 remote       
- ┃ ┣ 📂 repository   
- ┃ ┗ 📂 di           
- ┣ 📂 domain         # 순수 비즈니스 로직 계층
- ┃ ┗ 📂 usecase      
- ┣ 📂 ui             # Jetpack Compose 기반 UI 계층
- ┃ ┣ 📂 components   
- ┃ ┣ 📂 navigation   
- ┃ ┣ 📂 theme        
- ┃ ┗ 📂 [Features]   
- ┗ 📂 util           # Application 클래스 및 전역 유틸리티
+ ┣ 📂 ai           # Gemini AI 연동 및 프롬프트 최적화 (GeminiHelper)
+ ┣ 📂 data         # 데이터 소스 및 상세 구현 (Local, Remote, Repository)
+ ┣ 📂 di           # Hilt를 활용한 전역 의존성 주입 설정
+ ┣ 📂 domain       # 순수 비즈니스 로직 및 UseCase 정의
+ ┣ 📂 navigation   # 앱 내 화면 전환 흐름 및 Route 정의
+ ┣ 📂 ui           # Jetpack Compose 기반 UI 구성 요소 및 테마 관리
+ ┣ 📂 util         # 전역 유틸리티 클래스 및 공통 확장 함수
+ ┣ 📜 KnewzApplication.kt 
+ ┗ 📜 MainActivity.kt    
 ```
 
 ---
