@@ -22,8 +22,6 @@ Knewz는 단순 뉴스 검색 앱이 아닌,
 ## 🏗 Architecture & Design Pattern
 본 프로젝트는 Clean Architecture 원칙을 참고하여 MVVM 기반으로 계층을 분리했습니다.
 
-<img width="1408" height="424" alt="Gemini_Generated_Image_4eef5e4eef5e4eef" src="https://github.com/user-attachments/assets/1cd8f7fe-e374-47a5-a183-8993cb69f625" />
-
 1. UI Layer (Presentation)
 - Jetpack Compose를 사용하여 선언적으로 UI를 구성했습니다.
 - ViewModel은 StateFlow를 통해 UI 상태를 관리합니다.
