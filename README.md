@@ -28,12 +28,46 @@ Knewz는 단순 뉴스 검색 앱이 아닌,
 
 2. Domain Layer (Business Logic)
 - UseCase: 기능별(뉴스 가져오기, 요약하기 등)로 로직을 분리하여 재사용성을 높였습니다.
-- Entity/Repository Interface: 데이터의 형태와 통로를 정의합니다.
+- Repository Interface: 데이터의 통로를 정의합니다.
 
 3. Data Layer (Data Source)
 - Local: Room을 통해 최근 검색어 및 캐시 데이터를 관리합니다.
-- Remote: Retrofit을 이용한 뉴스 API 통신 및 Firebase(Auth/Realtime DB)를 통한 사용자 인증과 스크랩 데이터를 관리합니다.
-- Repository Impl: Domain 계층의 인터페이스를 구현하여 데이터 소스를 캡슐화합니다.
+- Remote: Retrofit을 이용한 뉴스 API 통신을# 📰 Knewz - 키워드로 보는 내 뉴스
+
+## 💡 기획 의도
+
+사용자가 등록한 관심 키워드를 기반으로 관련 최신 뉴스를 한눈에 모아볼 수 있는 뉴스 큐레이션 앱입니다.
+
+정보가 넘쳐나는 환경 속에서,
+사용자가 원하는 주제의 뉴스를 빠르게 탐색하고 효율적으로 소비할 수 있도록 돕는 것을 목표로 합니다.
+
+이 프로젝트는 아르바이트하던 가게 사장님의 실제 요청에서 출발했습니다.
+주식 투자에 관심이 많던 사장님께서
+“특정 키워드와 관련된 뉴스를 실시간으로 모아보고 싶다”고 하셨고,
+
+엑셀 기반 간단한 크롤링 도구를 제작해드린 경험을 계기로
+이를 모바일 환경에서도 사용할 수 있도록 앱으로 확장 개발하게 되었습니다.
+
+Knewz는 단순 뉴스 검색 앱이 아닌,
+사용자 맞춤형 뉴스 소비 환경을 제공하는 개인화 뉴스 플랫폼을 지향합니다.
+
+---
+
+## 🏗 Architecture & Design Pattern
+본 프로젝트는 Clean Architecture 원칙을 참고하여 MVVM 기반으로 계층을 분리했습니다.
+
+1. UI Layer (Presentation)
+- Jetpack Compose를 사용하여 선언적으로 UI를 구성했습니다.
+- ViewModel은 StateFlow를 통해 UI 상태를 관리합니다.
+
+2. Domain Layer (Business Logic)
+- UseCase: 기능별(뉴스 가져오기, 요약하기 등)로 로직을 분리하여 재사용성을 높였습니다.
+- Repository Interface: 데이터의 통로를 정의합니다.
+
+3. Data Layer (Data Source)
+- Local: Room을 통해 최근 검색어 및 캐시 데이터를 관리합니다.
+- Remote: Retrofit을 이용한 뉴스 API 통신을 수행합니다.
+- Repository Impl: Domain 계층의 인터페이스를 구현하며, Firebase Authentication을 활용한 사용자 인증 로직을 처리합니다.
 
 --- 
 
